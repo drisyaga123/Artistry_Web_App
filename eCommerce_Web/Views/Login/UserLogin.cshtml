@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewData["Title"] = "UserLogin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<link href="~/css/userlogin.css" rel="stylesheet" />
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="card" style="width: 25rem; ">
+        <div class="title d-flex justify-content-center align-items-center mt-3">
+            <h1>SIGN IN</h1>
+        </div>
+    <!-- Email input -->
+    <div class="form-outline mb-4 mx-5 " >
+        <input type="text" id="form2Example1" class="form-control" />
+        <label class="form-label" for="form2Example1">Username</label>
+    </div>
+
+    <!-- Password input -->
+    <div class="form-outline mb-4 mx-5 ">
+        <input type="password" id="form2Example2" class="form-control" />
+        <label class="form-label" for="form2Example2">Password</label>
+    </div>
+
+    <!-- 2 column grid layout for inline styling -->
+    <div class="row mb-4 mx-3 ">
+
+        <div class="col mx-3 ">
+            <!-- Simple link -->
+                <a href="#!" class="forgot text-decoration-none">Forgot password?</a>
+        </div>
+    </div>
+
+    <!-- Submit button -->
+    <button type="button" class="btn btn-custom btn-block mb-4 mx-5 ">Sign in</button>
+
+    <!-- Register buttons -->
+    <div class="text-center">
+            <p>Not a member? <a href="~/Register/UserRegister" class="reg text-decoration-none">Register</a></p>
+       
+        
+        </div>
+    
+</div>
+</div>
+
+
