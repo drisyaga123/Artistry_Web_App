@@ -4,4 +4,13 @@
     height: 500px; /* Adjust the height as needed */
     width: auto; /* Maintain aspect ratio */
 }
+.superNav {
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+.container-fluid {
+    padding-left: 15px;
+    padding-right: 15px;
+}
 

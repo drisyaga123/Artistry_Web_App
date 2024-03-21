@@ -1,0 +1,22 @@
+﻿.close {
+    float: right;
+    position: relative;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.2s ease;
+}
+
+    .close span {
+        position: relative; /* Add relative positioning */
+        display: block;
+        font-size: 1.5rem;
+        top: 3px;
+        right: -24px;
+        margin: -10px !important;
+    }
+.screen_height {
+    height: calc(100vh - 165px);
+}

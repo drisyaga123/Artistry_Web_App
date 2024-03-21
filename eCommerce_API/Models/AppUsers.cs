@@ -10,6 +10,7 @@ namespace eCommerce_API.Models
         public string? Bio { get; set; }
         [StringLength(300)]
         public string? Address { get; set; }
+        public string? Organization { get; set; }
         public bool? IsActive { get; set; }
     }
 }

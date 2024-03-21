@@ -5,21 +5,22 @@
 
 }
 <link href="~/css/userlogin.css" rel="stylesheet" />
-<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+<div class="container d-flex justify-content-center align-items-center screen_height">
+
     <div class="card" style="width: 25rem; ">
         <div class="title d-flex justify-content-center align-items-center mt-3">
             <h1>SIGN IN</h1>
         </div>
     <!-- Email input -->
     <div class="form-outline mb-4 mx-5 " >
-        <input type="text" id="form2Example1" class="form-control" />
-        <label class="form-label" for="form2Example1">Username</label>
+            <input type="text" id="username" class="form-control" />
+            <label class="form-label" for="username">Username</label>
     </div>
 
     <!-- Password input -->
     <div class="form-outline mb-4 mx-5 ">
-        <input type="password" id="form2Example2" class="form-control" />
-        <label class="form-label" for="form2Example2">Password</label>
+            <input type="password" id="password" class="form-control" />
+            <label class="form-label" for="password">Password</label>
     </div>
 
     <!-- 2 column grid layout for inline styling -->
@@ -32,7 +33,7 @@
     </div>
 
     <!-- Submit button -->
-    <button type="button" class="btn btn-custom btn-block mb-4 mx-5 ">Submit</button>
+        <button type="button" id="btnSubmit" onclick="submitLogin();" class="btn btn-warning btn-block mb-4 mx-5 ">Submit</button>
 
     <!-- Register buttons -->
     <div class="text-center">
@@ -43,5 +44,9 @@
     
 </div>
 </div>
+@* @section Scripts
+{
+    <script src="~/js/userlogin.js"></script>
+} *@
 
 

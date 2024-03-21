@@ -7,8 +7,6 @@ namespace eCommerce_API.Dtos
 
         [Required(ErrorMessage = "Biography is required")]
         public string Bio { get; set; }
-
-        [Required(ErrorMessage = "Address is required")]
-        public string Address { get; set; }
+        public string? Organization { get; set; }
     }
 }

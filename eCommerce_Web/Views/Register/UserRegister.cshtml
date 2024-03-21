@@ -3,43 +3,51 @@
 
 @{
     ViewData["Title"] = "Register";
-    Layout = "~/Views/Shared/_RegisterLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
-<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;  ">
-    <div class="card">
-        <div class="row">
-            <div class="col-6">
-                <img src="/image/Register.jpg" style="width: 65vh; height: 80vh;" class="p-3 border-radius" />
-            </div>
-            <div class="col-5 ms-1 p-3">
+<div class="container  d-flex justify-content-center align-items-center screen_height">
+    <div class="card" style="width: 28rem;">
+        
                 <div class="mt-3 text-center">
                     <h1>SIGN UP</h1>
                 </div>
                 <!-- Email input -->
-                <div class="form-outline mb-2 mx-5">
-                    <input type="text" id="form3Example1c" class="form-control" />
-                    <label class="form-label" for="form3Example1c">Your Name</label>
+           @*      <div class="form-outline mb-2 mx-5">
+                    <label class="form-label" for="userName">Name</label>
+                    <input type="text" id="userName" class="form-control" />
+                    
+                </div> *@
+                <div class="form-outline mb-2 mx-5 position-relative">
+                    <label class="form-label" for="userName">Name</label>
+                    <input type="text" id="userName" class="form-control" required/>
+                    <div class="invalid-tooltip position-static" id="name-error"></div>
                 </div>
 
                 <!-- Password input -->
-                <div class="form-outline mb-2 mx-5">
-                    <input type="password" id="form2Example2" class="form-control" />
-                    <label class="form-label" for="form2Example2">Password</label>
+                <div class="form-outline mb-2 mx-5 position-relative">
+                    <label class="form-label" for="userEmail">Email</label>
+                    <input type="email" id="userEmail" class="form-control" />
+                    <div class="invalid-tooltip position-static" id="email-error"></div>
+
                 </div>
-                <div class="form-outline mb-2 mx-5">
-                    <input type="password" id="form3Example4c" class="form-control" />
-                    <label class="form-label" for="form3Example4c">Password</label>
+                <div class="form-outline mb-2 mx-5 position-relative">
+                    <label class="form-label" for="userPswd">Password</label>
+                    <input type="password" id="userPswd" class="form-control" />
+                    <div class="invalid-tooltip position-static" id="pswd-error"></div>
                 </div>
-                <div class="form-outline mb-2 mx-5">
-                    <input type="password" id="form3Example4cd" class="form-control" />
-                    <label class="form-label" for="form3Example4cd">Repeat your password</label>
+                <div class="form-outline mb-2 mx-5 position-relative">
+                    <label class="form-label" for="userCPswd">Confirm Password</label>
+                    <input type="password" id="userCPswd" class="form-control" />
+                    <div class="invalid-tooltip position-static" id="cpswd-error"></div>
                 </div>
 
                 <!-- Submit button -->
-                <button type="button" class="btn btn-custom mb-4 mx-5 ">Submit</button>
+                <div>
+                    <button type="button" class="btn btn-primary mt-2 mb-2 mx-5" onclick="registerUser()">Submit</button>
 
+                </div>
                 <!-- Register buttons -->
                 <div class="text-center">
                     <p>Already you have account <a href="~/Login/UserLogin" class="reg text-decoration-none">Sign in</a></p>
@@ -47,10 +55,9 @@
             </div>
         </div>
       
-           
-        </div>
+       
 
        
-    </div>
-
+   
+<script src="~/js/registeruser.js"></script>
 
