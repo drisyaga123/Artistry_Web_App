@@ -13,6 +13,8 @@ var configuration = builder.Configuration;
 
 
 // Add services to the container.
+builder.Services.AddHttpClient();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -31,21 +33,26 @@ builder.Services.AddIdentity<AppUsers, IdentityRole<int>>(Options =>
 })
 .AddEntityFrameworkStores<AppDbContext>();
 
-
-    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder.Services.AddAuthentication(options =>
+{
+options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
     .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = configuration.GetSection("Jwt:Issuer").Get<string>(),
-            ValidAudience = configuration.GetSection("Jwt:Audience").Get<string>(),
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("Jwt:Key").Get<string>()))
-        };
-    });
+     {
+         options.TokenValidationParameters = new TokenValidationParameters
+         {
+             ValidateIssuer = true,
+             ValidateAudience = true,
+             ValidateLifetime = true,
+             ValidateIssuerSigningKey = true,
+             ValidIssuer = configuration.GetSection("Jwt:Issuer").Get<string>(),
+             ValidAudience = configuration.GetSection("Jwt:Audience").Get<string>(),
+             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("Jwt:Key").Get<string>()))
+         };
+     });
+
 builder.Services.AddCors(options => {
     var MyAllowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
     options.AddPolicy(name: "_myCORS",
@@ -71,10 +78,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseCors("_myCORS");
+
 app.UseHttpsRedirection();
+
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

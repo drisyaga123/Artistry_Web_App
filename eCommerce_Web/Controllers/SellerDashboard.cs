@@ -8,5 +8,25 @@ namespace eCommerce_Web.Controllers
         {
             return View();
         }
+        public IActionResult ProductMaster()
+        {
+            return View();
+        }
+        public IActionResult Account()
+        {
+            return View();
+        }
+        public IActionResult Review()
+        {
+            return View();
+        }
+        public IActionResult Notification()
+        {
+            return View();
+        }
+        public IActionResult Order()
+        {
+            return View();
+        }
     }
 }

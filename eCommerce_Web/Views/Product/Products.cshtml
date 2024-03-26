@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewData["Title"] = "Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section class="section-products">
+	<div class="container">
+		<div class="row justify-content-center text-center">
+			<div class="col-md-8 col-lg-6">
+				<div class="header">
+					<h3>Popular Products</h3>
+				</div>
+			</div>
+			<div class="dropdown">
+				<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+					<span class="dropdown-text"> Select Options</span>
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a href="#"><label><input type="checkbox" class="selectall" /><span class="select-text"> Select</span> All</label></a></li>
+					<li class="divider"></li>
+					<li><a class="option-link" href="#"><label><input name='options[]' type="checkbox" class="option justone" value='Option 1 ' /> Option 1</label></a></li>
+					<li><a href="#"><label><input name='options[]' type="checkbox" class="option justone" value='Option 2 ' /> Option 2</label></a></li>
+					<li><a href="#"><label><input name='options[]' type="checkbox" class="option justone" value='Option 3 ' /> Option 3</label></a></li>
+				</ul>
+			</div>
+		</div>
+		<hr />
+		<div class="row" id="prodListRow">
+			
+		</div>
+        <div class="row" id="paginationRow">
+            
+        </div>
+	</div>
+</section>
+@section Scripts{
+	<script src="~/js/productlist.js"></script>
+}

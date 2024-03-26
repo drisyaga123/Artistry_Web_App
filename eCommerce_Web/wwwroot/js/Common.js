@@ -3,7 +3,18 @@ var webBaseUrl = window.location.origin;
 var apiUrls = {
     login: apiBaseUrl + "/api/Auth/login",
     reg_user: apiBaseUrl + "/api/Auth/register-user",
-    reg_seller: apiBaseUrl +"/api/Auth/register-seller"
+    reg_seller: apiBaseUrl +"/api/Auth/register-seller",
+    add_product: apiBaseUrl +"/api/Product/add-product",
+    get_all_products : apiBaseUrl +"/api/Product/get-all-products",
+    get_product_image : apiBaseUrl +"/api/Product/get-product-image",
+    delete_product: apiBaseUrl +"/api/Product/delete_product",
+    get_product: apiBaseUrl +"/api/Product/get-product",
+    update_product: apiBaseUrl +"/api/Product/update-product",
+    get_seller_details: apiBaseUrl +"/api/Seller/get-seller-details",
+    update_dp: apiBaseUrl +"/api/Seller/update-dp",
+    list_all_products: apiBaseUrl +"/api/Product/list-all-products",
+    add_to_cart: apiBaseUrl +"/api/Cart/add-to-cart",
+    get_cart_items: apiBaseUrl +"/api/Cart/get-cart-items",
 }
 
 var redirectUrl = {

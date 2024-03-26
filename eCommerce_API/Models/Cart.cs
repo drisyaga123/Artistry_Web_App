@@ -11,16 +11,16 @@ namespace eCommerce_API.Models
         public  int UserId { get; set; }
         [Required,ForeignKey("Product")]
         public int ProductId { get; set; }
-        public int SellerId { get; set; }
+        public int? SellerId { get; set; }
         [Required]
         public DateTime CreatedDate { get; set; }
         [Required,StringLength(30)]
         public string? Status { get; set; }
 
-
-        // Navigation property to access related objects
         public Product? Product { get; set; }
-
+        [Range(1,10,ErrorMessage="1 through 10")]
+        public int Quantity { get; set; }
+        public double? Price { get; set; }
 
     }
 }

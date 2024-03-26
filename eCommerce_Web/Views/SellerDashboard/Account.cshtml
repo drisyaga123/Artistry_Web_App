@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewData["Title"] = "Account";
+    Layout = "~/Views/Shared/_SellerdashboardLayout.cshtml";
+}
+<section class="content_page">
+    <div class="container py-5">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-lg-6 mb-4 mb-lg-0">
+                <div class="card mb-3" style="border-radius: .5rem; width:100vh; height:50vh;">
+                    <div class="row g-0">
+                        <div class="col-md-4  text-center "
+                             style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                            
+                             <img id="imgDp" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                 alt="Avatar" class="img-fluid my-5 rounded-circle" style="width: 80px; height: 80px; object-fit: cover;" />
+                            
+                            <h5 id="sellerNameHeader"></h5>
+                            <p id="sellerRole"></p>
+                            <div class="height-100 d-flex justify-content-center align-items-center">
+                                <button type="button" class="far fa-edit mb-5 edit-icon" onclick="openDpModal()">  </button> <!-- Modal -->
+                        </div>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">
+                                            Change Your Profile
+                                        </h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                            <!-- Clickable icon with increased size -->
+                                            <div id="imagePreviewContainer">
+                                                <i class="bi bi-person-circle bi-3x edit-icon" style="cursor: pointer; color:lightgrey; font-size: 6em;"></i>
+                                            </div>
+                                            <div class="photo-input mt-2"> 
+                                                <button class="btn btn-sm btn-primary" id="selectFileButton"> Change </button>
+                                                <button class="btn btn-sm btn-warning" id="closeFileButton"> Clear </button>
+                                                </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                            <button class="btn btn-sm btn-success" onclick="updateDp()">Upload</button>
+                                        </div>
+                                </div>
+                            </div>
+                            </div>
+                            </div>
+
+
+                        <div class="col-lg-8">
+                            <div class="card">
+                                <div class="card-body" style="height:50vh;">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <span class="mb-0">Full Name:</span>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <span id="spnFullName"></span>
+                                        </div>
+                                       
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <span>Email:</span>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <span id="spnEmail"></span>
+                                        </div>
+                                        
+                                    </div>
+                                    <hr>
+                                   
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p>Address:<span id="spnAddress"></span></p>
+                                        </div>
+                                    </div><hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <span>Bio:</span>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <span id="spnBio"></span>
+                                        </div>
+                                       
+                                    </div>
+                                   
+                                    
+                                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </div>
+            </div></div>
+
+        
+</section>
+<script src="~/js/sellerprofile.js"></script>
