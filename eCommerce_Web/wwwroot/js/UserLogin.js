@@ -39,7 +39,7 @@ function submitLogin() {
                     window.location.href = redirectUrl.userLoginRedirection;
                 }
                 else if (response.role.toLowerCase() === "seller") {
-                    window.location.href = redirectUrl.userLoginRedirection;
+                    window.location.href = redirectUrl.sellerDashBoard;
                 }
 
 

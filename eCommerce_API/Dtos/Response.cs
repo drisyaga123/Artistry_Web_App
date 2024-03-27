@@ -15,6 +15,7 @@ namespace eCommerce_API.Dtos
 
     public class CartDisplayDto
     {
+        public int CartId { get; set;}
         public int ProductId { get; set;}
         public string? ProductName { get; set;}
         public string? ProductDescription { get; set;}
@@ -22,6 +23,7 @@ namespace eCommerce_API.Dtos
         public int Quantity { get; set;}
         public decimal SellingAmount { get; set;}
         public string? ProductImage { get; set;}
+        public decimal MRPAmount { get; set;}
 
     }
 }

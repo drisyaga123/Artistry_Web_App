@@ -15,10 +15,13 @@ var apiUrls = {
     list_all_products: apiBaseUrl +"/api/Product/list-all-products",
     add_to_cart: apiBaseUrl +"/api/Cart/add-to-cart",
     get_cart_items: apiBaseUrl +"/api/Cart/get-cart-items",
+    update_item_quantity : apiBaseUrl +"/api/Cart/update-item-quantity",
+    delete_cart_item: apiBaseUrl +"/api/Cart/delete-cart-item",
 }
 
 var redirectUrl = {
     userLoginRedirection: webBaseUrl +"/Home/Main",
+    sellerDashBoard: webBaseUrl +"/SellerDashboard/Account",
     adminLoginRedirection: "",
     sellerLoginRedirection:"",
     loginPage:webBaseUrl+"/Login/UserLogin"
