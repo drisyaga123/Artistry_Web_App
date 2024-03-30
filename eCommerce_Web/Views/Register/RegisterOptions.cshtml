@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewData["Title"] = "RegisterOptions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .card:hover {
+        background-color: rgb(255 255 255) !important;
+        box-shadow: -3px 4px 7px 0px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .card-body a.btn:hover {
+        color: #976628; /* Change button text color on hover to gold */
+    }
+</style>
+<div class="justify-content-center align-items-center d-flex" style="height: 70vh;">
+
+    <div class="w-50">
+        <h2 class="card-title mb-4">Register as:</h2>
+        <hr />
+
+        <div class="card text-center bg-light">
+            <div class="card-body">
+
+                <a href="~/Register/UserRegister" class="btn stretched-link fs-2">Customer</a>
+
+            </div>
+        </div>
+        <div class="card text-center bg-light mt-3">
+            <div class="card-body">
+
+                <a href="~/Seller/seller" class="btn stretched-link fs-2">Seller</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

@@ -6,5 +6,56 @@
     Layout = "~/Views/Shared/_UserdashboardLayout.cshtml";
 
 }
+<section class="content_page">
+    <div class="container-fluid">
+        @{
+            Html.RenderPartial("_AddAddress");
+        }
+        <div class="card w-50">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <span class="mb-0">Full Name:</span>
+                    </div>
+                    <div class="col-sm-9">
+                        <span id="spnUserFullName"></span>
+                    </div>
+
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <span>Email:</span>
+                    </div>
+                    <div class="col-sm-9">
+                        <span id="spnUserEmail"></span>
+                    </div>
+
+                </div>
+                
+            </div>
+        </div>
+        <div class="card w-50 mt-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5>Addresses</h5>
+                    <button class="btn btn-sm btn-success" onclick="showAddrModal()"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    
+                </div>
+                <hr>
+                <div class="row" id="addrDiv">
+                    <div id="addrSect">
+
+                    </div>
+                    <span id="noAddress" class="text-black-50">No Addresses</span>
+                </div>
+    
+            </div>
+        </div>
+    </div>
 
 
+</section>
+@section Scripts{
+    <script src="~/js/userdashboard.js"></script>
+}

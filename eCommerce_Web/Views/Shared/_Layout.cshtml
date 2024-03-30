@@ -56,35 +56,25 @@
                                 <a class="nav-link mx-2 text-uppercase" href="~/Home/Main">HOME</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mx-2 text-uppercase" href="#aboutUs">ABOUT US</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link mx-2 text-uppercase" href="~/Product/Products">PRODUCTS</a>
                             </li>
-                            <li class="nav-item">
-                                
-                                <a class="nav-link mx-2 text-uppercase" href="~/Seller/Seller" onclick="showSection('sellPaintings')">Sale</a>
-                                
-                            </li>
-                           
+                     
                         </ul>
-                        <ul class="navbar-nav  ">
-                            <li class="nav-item">
-                                <a class="nav-link mx-2 text-uppercase" href="~/Product/Cart"><i class="fa-solid fa-cart-shopping me-1"></i> Cart</a>
-                            </li>
-                  
-                        </ul>
+           
                        
                         <div id="divUserIcon" class="d-none" >
-                            <a href="~/SellerDashboard/SellerDashboard">
+                            <a href="~/UserDashboard/UserDashboard">
                             <img src="~/image/yellow-user.png" alt="Artistry Logo" class="img-fluid ms-2" style="max-width: 50px; height: 50px;">
-                            </a><p id="userIdentity" class="text-center">Hi</p>
+                            </a><p id="userIdentity" class="text-center"></p>
                            
                         </div>
                         
                         <div>
-                            <button class="btn btn-outline-primary" onclick="loginPage()" id="itemLogin">Login</button>
+                            <button class="btn btn-outline-warning" onclick="loginPage()" id="itemLogin">Login</button>
                             <button class="btn btn-outline-warning ms-4 d-none" onclick="logoutUser()" id="itemLogout">Logout</button>
+                        </div>
+                        <div class="ms-3">
+                            <a class="btn btn-outline-primary" href="~/Register/RegisterOptions">Register</a>
                         </div>
                     </div>
                 </div>
@@ -94,17 +84,6 @@
 
     <div>
         @RenderBody()
-        
-            <footer class="text-center text-lg-start text-dark"
-                    style="background-color: #ECEFF1">
-                
-                <div class="text-center p-3"
-                     style="background-color: rgba(0, 0, 0, 0.2)">
-                    © 2024 Copyright
-                      </div>
-                <!-- Copyright -->
-            </footer>
-            <!-- Footer -->
         </div>
         <!-- End of .container -->
        

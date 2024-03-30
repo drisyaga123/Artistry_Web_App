@@ -1,3 +1,5 @@
+using System.Net;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -20,7 +22,15 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseStatusCodePages(async context => {
+    var request = context.HttpContext.Request;
+    var response = context.HttpContext.Response;
 
+    if (response.StatusCode == (int)HttpStatusCode.Unauthorized)
+    {
+        response.Redirect("/Login/UserLogin");
+       }
+});
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Main}/{id?}");

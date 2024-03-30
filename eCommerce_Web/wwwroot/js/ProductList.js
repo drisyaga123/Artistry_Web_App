@@ -91,7 +91,9 @@ function addItemToCart(id,quantity) {
         });
     };
 }
-
+function goToOrderPage(id) {
+    window.location.href = redirectUrl.orderSummaryPage + "?id=" + id;
+}
 function listProducts(pageIndex) {
     $("#loader").removeClass("d-none");
     var obj = {
@@ -115,8 +117,9 @@ function listProducts(pageIndex) {
                 var totalPages = parseInt(response.totalPages);
                 response.product_List.forEach(function (product) {
                     var offPercentage = 100 - ((parseFloat(product.sellingAmount) / parseFloat(product.mrpAmount)) * 100);
-                    html = html + `<div class="col-lg-3 mb-3"><div class="card" style="width: 18rem;"><img class="card-img-top card-img-fit" src="${product.productImage}" alt="Card image cap"><div class="card-body"><h4>${product.productName}</h4><p>${product.productDescription}</p>
-                    <span class="text-decoration-line-through text-black-50">₹${product.mrpAmount}</span><span class="ms-2 fw-medium">₹${product.sellingAmount}</span><span class="ms-2 text-danger" style="font-size: smaller;">${offPercentage}% off</span><div class="d-flex justify-content-center mt-2"><button class="btn btn-primary" onclick="addItemToCart(${product.id},1)">Add to cart</button><button class="btn btn-warning ms-2">Buy now</button></div></div></div></div>`
+                    offPercentage = offPercentage.toFixed(2);
+                    html = html + `<div class="col-lg-3 mb-3"><div class="card" style="width: 18rem;"><img class="card-img-top card-img-fit" src="${product.productImage}" alt="Card image cap"><div class="card-body"><h4>${product.productName}</h4><p class="text-black-50 fst-italic">${product.productDescription}</p>
+                    <span class="text-decoration-line-through text-black-50">₹${product.mrpAmount}</span><span class="ms-2 fw-medium">₹${product.sellingAmount}</span><span class="ms-2 text-danger" style="font-size: smaller;">${offPercentage}% off</span><div class="d-flex justify-content-center mt-2"><button class="btn btn-primary" onclick="addItemToCart(${product.id},1)">Add to cart</button><button class="btn btn-warning ms-2" onclick="goToOrderPage(${product.id})">Buy now</button></div></div></div></div>`
 
                 });
                 $("#prodListRow").empty();

@@ -2,6 +2,7 @@
 using eCommerce_API.Data;
 using eCommerce_API.Dtos;
 using eCommerce_API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ namespace eCommerce_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SellerController : ControllerBase
     {
         private readonly UserManager<AppUsers> _userManager;
@@ -25,8 +27,8 @@ namespace eCommerce_API.Controllers
             _httpContextAccessor = httpContextAccessor;
         }
         [HttpGet]
-        [Route("get-seller-details")]
-        public async Task<IActionResult> GetSellerById()
+        [Route("get-user-details")]
+        public async Task<IActionResult> GetUserById()
         {
             try
             {
@@ -35,22 +37,15 @@ namespace eCommerce_API.Controllers
                 var seller = _userManager.FindByIdAsync(currentUserId.ToString());
                 if (seller == null)
                 {
-                    return BadRequest("Seller not found");
+                    return BadRequest("user not found");
                 }
                 else
                 {
-                    string productImg = seller.Result.ProfilePicture;
+                    string productImg = string.IsNullOrWhiteSpace(seller.Result.ProfilePicture)?"": seller.Result.ProfilePicture;
                     if (!string.IsNullOrWhiteSpace(productImg) && System.IO.File.Exists(productImg))
                     {
-
-                        byte[] imageBytes = System.IO.File.ReadAllBytes(productImg);
-                        string base64String = Convert.ToBase64String(imageBytes);
-                        // Get the file extension from the original image path
-                        string fileExtension = Path.GetExtension(productImg);
-
-                        // Update the ProductImage property with the Base64 string and original file extension
-                        var ImgBase64 = $"data:image/{fileExtension};base64,{base64String}"; // Assuming images are JPEG format
-                        seller.Result.ProfilePicture = ImgBase64;
+                        seller.Result.ProfilePicture = CommonMethods.ConvertImgToBase64(productImg);
+               
                     }
                     return Ok(seller.Result);
                 }

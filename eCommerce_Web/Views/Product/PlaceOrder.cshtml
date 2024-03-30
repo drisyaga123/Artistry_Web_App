@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewData["Title"] = "PlaceOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="h-100">
+    <div class="container h-100 py-5">
+        @{
+            Html.RenderPartial("_AddAddress");
+        }
+        <div class="row d-flex justify-content-center align-items-center h-100" style="background-color: #eee;">
+            <div class="col-10">
+              <div class="row">
+                    <h4 class="fw-normal mb-0 text-black">Get your order</h4>
+                  <div class="col-8">
+                        <div id="addressContainer">
+                            <div class="card col-md-8">
+                                <div class="card-body">
+                                    <h5>Choose Address</h5>
+                                    <hr />
+                                    <div id="addrSect">
+                                    </div>
+                                    <span id="noAddress" class="text-black-50">No Addresses</span>
+                                </div>
+
+                            </div>
+                            
+                        </div>
+                        <div id="paymentContainer">
+                            <div class="card col-md-8">
+                                <div class="card-body">
+                            <h5>Choose Payment Method</h5>
+                            <hr />
+                            <div class="row">
+                                <div>
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="radio" name="paymentMethod" id="payOnDelivery">
+                                        <label class="form-check-label" for="payOnDelivery">Pay on Delivery</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div>
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="radio" name="paymentMethod" id="internetBanking">
+                                        <label class="form-check-label" for="internetBanking">Internet Banking</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div>
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="radio" name="paymentMethod" id="upi">
+                                        <label class="form-check-label" for="upi">UPI</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            </div>
+                        </div>
+                  </div>
+                  <div class="col-4">
+
+                  </div>
+                </div>
+       
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <script src="~/js/cart.js"></script>
+}
+

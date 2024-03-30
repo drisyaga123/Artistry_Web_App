@@ -63,37 +63,56 @@ namespace eCommerce_API.Controllers
 
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("get-cart-items")]
-        public async Task<IActionResult> GetCartItems()
+        public async Task<IActionResult> GetCartItems(IdRequest productId)
         {
-            int currentUserId = JwtDetailsFetch.GetCurrentUserId(_httpContextAccessor);
-            var ItemsList =  _dbContext.Carts.Where(c=>c.UserId==currentUserId && c.Status.ToLower()=="active").ToList();
             List<CartDisplayDto> cartDisplayDtos = new List<CartDisplayDto>();
-            if (ItemsList.Any())
+            if (productId.Id > 0)
             {
-                
-                foreach (var item in ItemsList)
+                var prd= _dbContext.Products.Where(p => p.Id == productId.Id && p.Status.ToLower() == "active").FirstOrDefault();
+                CartDisplayDto cartDisplay = new CartDisplayDto()
                 {
-                    var product=_dbContext.Products.Where(p=>p.Id==item.ProductId).FirstOrDefault();
-                    if(product!=null)
-                    {
-                        CartDisplayDto cart=new CartDisplayDto();
-                        cart.CartId = item.Id;
-                        cart.ProductId = item.ProductId;
-                        cart.ProductDescription = product.ProductDescription;
-                        cart.ProductName = product.ProductName;
-                        cart.Quantity=item.Quantity;
-                        cart.SellingAmount = item.Price==null?0:Convert.ToDecimal(item.Price);
-                        cart.MRPAmount = product.MRPAmount;
-                        cart.ProductImage = CommonMethods.ConvertImgToBase64(product.ProductImage);
-                        cart.ProductCategory = product.ProductCategory;
-                        cartDisplayDtos.Add(cart);
-                    }
-                }
-      
+                    ProductId= prd.Id,
+                    ProductDescription=prd.ProductDescription,
+                    ProductName=prd.ProductName,
+                    SellingAmount=prd.SellingAmount,
+                    MRPAmount=prd.MRPAmount,
+                    ProductImage= CommonMethods.ConvertImgToBase64(prd.ProductImage),
+                    ProductCategory=prd.ProductCategory,
+                    Quantity=1
+                };
+                cartDisplayDtos.Add(cartDisplay);
             }
+            else
+            {
+                int currentUserId = JwtDetailsFetch.GetCurrentUserId(_httpContextAccessor);
+                var ItemsList = _dbContext.Carts.Where(c => c.UserId == currentUserId && c.Status.ToLower() == "active").ToList();
+               
+                if (ItemsList.Any())
+                {
 
+                    foreach (var item in ItemsList)
+                    {
+                        var product = _dbContext.Products.Where(p => p.Id == item.ProductId && p.Status.ToLower() == "active").FirstOrDefault();
+                        if (product != null)
+                        {
+                            CartDisplayDto cart = new CartDisplayDto();
+                            cart.CartId = item.Id;
+                            cart.ProductId = item.ProductId;
+                            cart.ProductDescription = product.ProductDescription;
+                            cart.ProductName = product.ProductName;
+                            cart.Quantity = item.Quantity;
+                            cart.SellingAmount = item.Price == null ? 0 : Convert.ToDecimal(item.Price);
+                            cart.MRPAmount = product.MRPAmount;
+                            cart.ProductImage = CommonMethods.ConvertImgToBase64(product.ProductImage);
+                            cart.ProductCategory = product.ProductCategory;
+                            cartDisplayDtos.Add(cart);
+                        }
+                    }
+
+                }
+            }
             return Ok(cartDisplayDtos);
 
         }
