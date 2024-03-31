@@ -44,7 +44,7 @@ namespace eCommerce_API.Controllers
                     string productImg = string.IsNullOrWhiteSpace(seller.Result.ProfilePicture)?"": seller.Result.ProfilePicture;
                     if (!string.IsNullOrWhiteSpace(productImg) && System.IO.File.Exists(productImg))
                     {
-                        seller.Result.ProfilePicture = CommonMethods.ConvertImgToBase64(productImg);
+                        seller.Result.ProfilePicture = await CommonMethods.ConvertImgToBase64(productImg);
                
                     }
                     return Ok(seller.Result);

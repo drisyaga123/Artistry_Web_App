@@ -97,8 +97,9 @@
     <script>
         $(document).ready(function(){
             var loginFlag = localStorage.getItem("islogin");
+            var isCustomerLogin = localStorage.getItem("isCustomerLogin");
             var userName = localStorage.getItem("username");
-            if(loginFlag=="1"){
+            if (loginFlag == "1" && isCustomerLogin=="1") {
                 $("#itemLogout").removeClass("d-none");
                 $("#itemLogin").addClass("d-none");
                 $("#divUserIcon").removeClass("d-none");

@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewData["Title"] = "OrderHistory";
+    Layout = "~/Views/Shared/_UserdashboardLayout.cshtml";
+}
+@{
+    Html.RenderPartial("_ConfirmModal");
+}
+@{
+    Html.RenderPartial("_ViewMoreModal");
+}
+<section class="content_page">
+    
+    <section class="vh-100">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-10 col-lg-8 col-xl-6" id="orderHistoryDiv">
+                 
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+@section Scripts{
+    <script src="~/js/orderhistory.js"></script>
+}

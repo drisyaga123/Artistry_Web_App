@@ -78,7 +78,7 @@ namespace eCommerce_API.Controllers
                     ProductName=prd.ProductName,
                     SellingAmount=prd.SellingAmount,
                     MRPAmount=prd.MRPAmount,
-                    ProductImage= CommonMethods.ConvertImgToBase64(prd.ProductImage),
+                    ProductImage= await CommonMethods.ConvertImgToBase64(prd.ProductImage),
                     ProductCategory=prd.ProductCategory,
                     Quantity=1
                 };
@@ -105,7 +105,7 @@ namespace eCommerce_API.Controllers
                             cart.Quantity = item.Quantity;
                             cart.SellingAmount = item.Price == null ? 0 : Convert.ToDecimal(item.Price);
                             cart.MRPAmount = product.MRPAmount;
-                            cart.ProductImage = CommonMethods.ConvertImgToBase64(product.ProductImage);
+                            cart.ProductImage = await CommonMethods.ConvertImgToBase64(product.ProductImage);
                             cart.ProductCategory = product.ProductCategory;
                             cartDisplayDtos.Add(cart);
                         }
@@ -163,6 +163,25 @@ namespace eCommerce_API.Controllers
                 _dbContext.Update(item);
                 await _dbContext.SaveChangesAsync();
                 return Ok(new Response { Status = "Success", Message = "Item removed successfully" });
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+        [HttpGet]
+        [Route("get-cart-itemscount")]
+        public async Task<IActionResult> GetCartItemsCount()
+        {
+            try
+            {
+                int currentUserId = JwtDetailsFetch.GetCurrentUserId(_httpContextAccessor);
+
+                var item = _dbContext.Carts.Where(c => c.UserId == currentUserId && c.Status.ToLower() == "active").ToList();
+               
+                return Ok(item.Count);
 
             }
             catch (Exception ex)

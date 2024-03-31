@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function getSellerDetails() {
     $("#loader").removeClass("d-none");
     $.ajax({
-        url: apiUrls.get_seller_details,
+        url: apiUrls.get_user_details,
         type: "GET",
         contentType: "application/json",
         headers: { "Authorization": 'Bearer ' + localStorage.getItem('jwtToken') },
@@ -60,7 +60,7 @@ function getSellerDetails() {
                     $("#sellerRole").html("Artist");
                 }
                 else {
-                    $("#sellerRole").html("Organization");
+                    $("#sellerRole").html("Organization : " + response.organization);
                 }
                 if (response.profilePicture != null && response.profilePicture != "") {
                     $("#imgDp").attr("src", response.profilePicture);

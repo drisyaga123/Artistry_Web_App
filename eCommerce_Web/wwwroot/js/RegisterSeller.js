@@ -84,7 +84,7 @@ function validateRegSeller() {
         if (org == "" || org == null) {
             isValid = false;
             $("#seller_Org").removeClass("is-valid").addClass("is-invalid");
-            $("#org-error").text("Biography is required!");
+            $("#org-error").text("Organization is required!");
         }
         else {
             $("#seller_Org").removeClass("is-invalid").addClass("is-valid");

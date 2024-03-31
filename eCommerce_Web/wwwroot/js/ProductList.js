@@ -49,7 +49,7 @@ function handleCheckboxChange(event) {
   
     listProducts(1)
 }
-function addItemToCart(id,quantity) {
+function addItemToCart(id, quantity) {
     if (id > 0) {
         $("#loader").removeClass("d-none");
         var obj = {
@@ -66,6 +66,7 @@ function addItemToCart(id,quantity) {
                 $("#loader").addClass("d-none");
                 if (response != null) {
                     if (response.status.toLowerCase() === "success") {
+                        getCartItemCount();
                         alertSuccess(response.message);
                     }
                     else {
@@ -85,7 +86,7 @@ function addItemToCart(id,quantity) {
                 else {
                     alertFailed(xhr.responseText);
                 }
-              
+
 
             }
         });

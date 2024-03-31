@@ -17,12 +17,18 @@ var apiUrls = {
     get_cart_items: apiBaseUrl +"/api/Cart/get-cart-items",
     update_item_quantity : apiBaseUrl +"/api/Cart/update-item-quantity",
     delete_cart_item: apiBaseUrl +"/api/Cart/delete-cart-item",
+    get_cart_itemscount: apiBaseUrl +"/api/Cart/get-cart-itemscount",
     get_all_address: apiBaseUrl +"/api/Address/get-all-address",
     add_address: apiBaseUrl +"/api/Address/add-address",
     delete_address: apiBaseUrl +"/api/Address/delete-address",
     update_address : apiBaseUrl +"/api/Address/update-address",
     get_address : apiBaseUrl +"/api/Address/get-address",
     place_order: apiBaseUrl +"/api/Order/place-order",
+    get_all_orders : apiBaseUrl +"/api/Order/get-all-orders",
+    cancel_order : apiBaseUrl +"/api/Order/cancel-order",
+    get_orderbyid : apiBaseUrl +"/api/Order/get-orderbyid",
+    get_all_orderstoship : apiBaseUrl +"/api/Order/get-all-orderstoship",
+    approve_order : apiBaseUrl +"/api/Order/approve-order",
 
 }
 
@@ -38,7 +44,8 @@ var redirectUrl = {
 $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
     if (jqxhr.status === 401) {
         // Redirect to the login page
-        window.location.href = '/Login/UserLogin';
+        logoutUser();
+
     }
 });
 function logoutUser() {
@@ -199,4 +206,22 @@ function addAddress() {
     else {
         alertFailed("Please fill all fields");
     }
+}
+
+function formatDate(time) {
+
+    let date = new Date(time);
+
+    // Get day, month, and year
+    let day = date.getUTCDate();
+    let month = date.getUTCMonth() + 1; // Month starts from 0
+    let year = date.getUTCFullYear();
+
+    // Format day, month, and year with leading zeros if necessary
+    let formattedDay = day < 10 ? "0" + day : day;
+    let formattedMonth = month < 10 ? "0" + month : month;
+
+    // Construct the date string in dd-mm-yyyy format
+    let formattedDate = `${formattedDay}-${formattedMonth}-${year}`;
+    return formattedDate;
 }

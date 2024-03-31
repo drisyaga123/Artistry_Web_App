@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eCommerce_API.Data;
 
@@ -11,9 +12,10 @@ using eCommerce_API.Data;
 namespace eCommerce_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240331032425_OrderedProductsremoved")]
+    partial class OrderedProductsremoved
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -236,9 +238,6 @@ namespace eCommerce_API.Migrations
                     b.Property<decimal>("MRPAmount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("OrderId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -268,9 +267,6 @@ namespace eCommerce_API.Migrations
                     b.Property<string>("SellerAddress")
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
-
-                    b.Property<int>("SellerId")
-                        .HasColumnType("int");
 
                     b.Property<string>("SellerName")
                         .IsRequired()

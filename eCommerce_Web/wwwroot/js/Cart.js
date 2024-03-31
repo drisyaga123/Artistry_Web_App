@@ -69,6 +69,7 @@ function removeCartItem(id) {
                 if (response != null) {
                     if (response.status.toLowerCase() === "success") {
                         alertSuccess(response.message);
+                        getCartItemCount();
                         getAllCartItems(0);
                     }
                     else {

@@ -19,12 +19,17 @@
             <div class="container-fluid">
 
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                    <ul class="navbar-nav mb-2 mb-lg-0 me-3">
+                    <ul class="navbar-nav mb-2 mb-lg-0 me-4">
                         <!-- Cart Button -->
                         <li class="nav-item">
-                            <a class="nav-link" href="~/Product/Cart">
+                            <a class="nav-link position-relative" href="~/Product/Cart">
                                 <i class="fas fa-shopping-cart fa-lg"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cardItemCount">
+                                    
+                                    <span class="visually-hidden">unread messages</span>
+                                </span>
                             </a>
+           
                         </li>
                     </ul>
                     <ul class="navbar-nav">
@@ -51,14 +56,14 @@
                         </div>
                         <div class="w-100 nav-item-bg">
                             <a href="~/UserDashboard/Products" class="nav-link align-middle px-0" onclick="toggleActive(this)">
-                                <i class="fa fa-history" aria-hidden="true"></i>
+                                <i class="fa fa-list" aria-hidden="true"></i>
                                 <span class="ms-1 d-none d-sm-inline">Products</span>
                             </a>
                         </div>
                         <div class="w-100 nav-item-bg">
-                            <a href="#" class="nav-link align-middle px-0" onclick="toggleActive(this)">
+                            <a href="~/UserDashboard/OrderHistory" class="nav-link align-middle px-0" onclick="toggleActive(this)">
                                 <i class="fa fa-history" aria-hidden="true"></i>
-                                <span class="ms-1 d-none d-sm-inline">Orders</span>
+                                <span class="ms-1 d-none d-sm-inline">Your Orders</span>
                             </a>
                         </div>
                     </div>
@@ -66,7 +71,7 @@
             </div>
         </div>
     </section>
-    <div style="padding-top: 70px;">
+    <div>
         @RenderBody()
     </div>
 
@@ -76,6 +81,7 @@
     <script src="~/lib/font-awesome/js/all.min.js"></script>
     <script src="~/lib/custom_alert/jquery.bootstrap-growl.min.js"></script>
     <script src="~/js/common.js"></script>
+    <script src="~/js/userlayout.js"></script>
     @RenderSection("Scripts", false)
  <script>
         var userName = localStorage.getItem("username");
