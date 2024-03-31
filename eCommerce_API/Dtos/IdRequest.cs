@@ -1,4 +1,6 @@
-﻿namespace eCommerce_API.Dtos
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace eCommerce_API.Dtos
 {
     public class IdRequest
     {
@@ -9,6 +11,7 @@
         public int PageIndex { get; set; }
         public string[] Category { get; set; }
         public string[] SubCategory { get; set; }
+        //public string[] Price { get; set; }
         public int PageSize { get; set; }
 
     }
@@ -17,5 +20,26 @@
         public int ProductId { get; set; }
         public int Quantity { get; set; }
 
+    }
+    public class AddressDto
+    {
+        public int? Id { get; set; }
+        [Required]
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
+        [Required]
+        public string Address { get; set; }
+        [Required]
+        public string Landmark { get; set; }
+        [Required]
+        public string City { get; set; }
+        [Required]
+        public string State { get; set; }
+        [Required]
+        public string Pincode { get; set; }
+        [Required]
+        public string Phone { get; set; }
+     
     }
 }

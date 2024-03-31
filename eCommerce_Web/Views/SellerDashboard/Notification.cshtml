@@ -2,19 +2,31 @@
     ViewData["Title"] = "Notification";
     Layout = "~/Views/Shared/_SellerdashboardLayout.cshtml";
 }
-<div class="content_page">
-    <table class="table">
-        <thead class="thead-dark">
+@{
+    Html.RenderPartial("_ConfirmModal");
+}
+<section class="content_page">
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
             <tr>
-                <th scope="col">ID</th>
+                <th scope="col">ORDER ID</th>
                 <th scope="col">PRODUCT NAME</th>
                 <th scope="col">IMAGE</th>
-
+                <th scope="col">QUANTITY</th>
+                <th scope="col">DELIVERY ADDRESS</th>
+                <th scope="col">ORDER DATE</th>
                 <th scope="col">APPROVE</th>
                
             </tr>
         </thead>
+        <tbody id="tBodyOrders">
+           
+  
+        </tbody>
 
 
     </table>
-</div>
+</section>
+@section Scripts{
+    <script src="~/js/sellernotify.js"></script>
+}

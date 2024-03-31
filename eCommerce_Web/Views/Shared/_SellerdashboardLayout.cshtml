@@ -11,59 +11,38 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css" rel="stylesheet">
 
     <script src="~/lib/jquery/jquery.min.js"></script>
-    <style>
-        .nav-item-bg {
-            border-bottom: 1px solid #ccc; /* Change the color and style as needed */
-            padding: 10px;
-        }
-
-        .nav-link {
-            font-size: 20px; /* Increase font size */
-            line-height: 30px; /* Increase line height */
-            color: #000000 !important
-        }
-
-            .nav-link:hover {
-                color: #a25858 !important; /* Change font color to #a25858 on hover and when active */
-            }
-
-        .nav-item-bg:hover {
-            background-color: #e4e4e4; /* Change to desired background color on hover */
-            border-radius: 10px;
-            transition: background-color 0.3s; /* Add smooth transition effect */
-        }
-
-        .nav-item-bg.active {
-            background-color: #e4e4e4; /* Change to desired background color on hover */
-            border-radius: 10px;
-            color: #a25858 !important; /* Set font color for active state */
-        }
-
-        .sidebar_layout {
-            float: left;
-            width: 230px; /* Adjust the width of the sidebar as needed */
-            height: 100%; /* Adjust the height of the sidebar as needed */
-            background-color: #f0f0f0;
-        }
-
-        .content_page {
-            margin-left: 250px; /* Adjust the margin to ensure content does not overlap with sidebar */
-            padding: 50px;
-        }
-    </style>
+  
 </head>
 <body>
     <div class="loader-wrapper d-none" id="loader">
         <div class="loader"></div>
     </div>
-    <section class="sidebar_layout">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <img src="~/image/logo.png" width="100" />
+            <div class="container-fluid">
+
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    
+                    <ul class="navbar-nav">
+                        <!-- User Image -->
+                        <!-- Logout Button -->
+                        <li class="nav-item">
+                            <a class="btn btn-warning" onclick="logoutUser()">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section class="sidebar_layout fixed-top" style="margin-top:78px">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 px-0 bg-light shadow" style="height: 100vh;">
                     <div class="pt-3 pb-4 px-3">
                         <div class="w-100 nav-item-bg">
-                            <a href="#" class="nav-link align-middle px-0" onclick="toggleActive(this)">
-                                <i class="fa fa-home" aria-hidden="true"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
+                            <a href="~/SellerDashboard/Account" class="nav-link px-0 align-middle" onclick="toggleActive(this)">
+                                <i class="fa fa-table" aria-hidden="true"></i> <span class="ms-1 d-none d-sm-inline">Profile</span>
                             </a>
                         </div>
                         @* <div>
@@ -87,25 +66,13 @@
                             </a>
                         </div>
                         <div class="w-100 nav-item-bg">
-                            <a href="~/SellerDashboard/Account" class="nav-link px-0 align-middle" onclick="toggleActive(this)">
-                                <i class="fa fa-table" aria-hidden="true"></i> <span class="ms-1 d-none d-sm-inline">Account</span>
-                            </a>
-                        </div>
-                        <div class="w-100 nav-item-bg">
-                            <a href="~/SellerDashboard/Review" class="nav-link px-0 align-middle" onclick="toggleActive(this)">
-                                <i class="fa fa-table" aria-hidden="true"></i> <span class="ms-1 d-none d-sm-inline">Reviews</span>
-                            </a>
-                        </div>
-
-
-                        <div class="w-100 nav-item-bg">
                             <a href="~/SellerDashboard/Notification" class="nav-link px-0 align-middle" onclick="toggleActive(this)">
                                 <i class="fa fa-table" aria-hidden="true"></i> <span class="ms-1 d-none d-sm-inline">Notifications</span>
                             </a>
                         </div>
-                        <div class="w-100 nav-item-bg">
-                            <a href="~/SellerDashboard/Order" class="nav-link px-0 align-middle" onclick="toggleActive(this)">
-                                <i class="fa fa-table" aria-hidden="true"></i> <span class="ms-1 d-none d-sm-inline">Orders</span>
+                        <div class="w-100 nav-item-bg d-none">
+                            <a href="~/SellerDashboard/Review" class="nav-link px-0 align-middle" onclick="toggleActive(this)">
+                                <i class="fa fa-table" aria-hidden="true"></i> <span class="ms-1 d-none d-sm-inline">Reviews</span>
                             </a>
                         </div>
                     </div>
@@ -125,16 +92,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="~/js/common.js"></script>
     @RenderSection("Scripts", false)
-    <script>
-        function toggleActive(element) {
-            var parent = element.closest('.nav-item-bg');
-            var siblings = parent.parentElement.querySelectorAll('.nav-item-bg');
-            siblings.forEach(function (sibling) {
-                sibling.classList.remove('active');
-            });
 
-            parent.classList.add('active');
-        }
-    </script>
 </body>
 </html>

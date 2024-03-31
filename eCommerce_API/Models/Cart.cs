@@ -20,7 +20,7 @@ namespace eCommerce_API.Models
         public Product? Product { get; set; }
         [Range(1,10,ErrorMessage="1 through 10")]
         public int Quantity { get; set; }
-        public double? Price { get; set; }
+        public decimal? Price { get; set; }
 
     }
 }

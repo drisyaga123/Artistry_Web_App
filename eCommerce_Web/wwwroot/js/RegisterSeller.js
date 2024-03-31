@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    debugger
+    
     $('input[name="inlineRadioOptions"]').change(function () {
         if ($('#rdArtist').is(':checked')) {
 
@@ -10,7 +10,7 @@
     });
 })
 function validateRegSeller() {
-    debugger
+    
     let name = $("#seller_Name").val();
     let email = $("#seller_Email").val();
     let pswd = $("#seller_Psd").val();
@@ -84,7 +84,7 @@ function validateRegSeller() {
         if (org == "" || org == null) {
             isValid = false;
             $("#seller_Org").removeClass("is-valid").addClass("is-invalid");
-            $("#org-error").text("Biography is required!");
+            $("#org-error").text("Organization is required!");
         }
         else {
             $("#seller_Org").removeClass("is-invalid").addClass("is-valid");
@@ -98,7 +98,7 @@ function validateRegSeller() {
 
 function registerSeller() {
     if (validateRegSeller()) {
-        debugger
+        
         let obj = {
             Username: $("#seller_Name").val().trim(),
             Email: $("#seller_Email").val().trim(),

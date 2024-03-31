@@ -46,7 +46,8 @@ namespace eCommerce_API.Controllers
                     UserId = currentUserId,
                     Quantity = request.Quantity,
                     Status = "Active",
-                    CreatedDate = DateTime.Now
+                    CreatedDate = DateTime.Now,
+                    Price = productAddToCart.SellingAmount,
 
                 };
                 await _dbContext.AddAsync(newItemToCart);
@@ -62,36 +63,131 @@ namespace eCommerce_API.Controllers
 
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("get-cart-items")]
-        public async Task<IActionResult> GetCartItems()
+        public async Task<IActionResult> GetCartItems(IdRequest productId)
+        {
+            List<CartDisplayDto> cartDisplayDtos = new List<CartDisplayDto>();
+            if (productId.Id > 0)
+            {
+                var prd= _dbContext.Products.Where(p => p.Id == productId.Id && p.Status.ToLower() == "active").FirstOrDefault();
+                CartDisplayDto cartDisplay = new CartDisplayDto()
+                {
+                    ProductId= prd.Id,
+                    ProductDescription=prd.ProductDescription,
+                    ProductName=prd.ProductName,
+                    SellingAmount=prd.SellingAmount,
+                    MRPAmount=prd.MRPAmount,
+                    ProductImage= await CommonMethods.ConvertImgToBase64(prd.ProductImage),
+                    ProductCategory=prd.ProductCategory,
+                    Quantity=1
+                };
+                cartDisplayDtos.Add(cartDisplay);
+            }
+            else
+            {
+                int currentUserId = JwtDetailsFetch.GetCurrentUserId(_httpContextAccessor);
+                var ItemsList = _dbContext.Carts.Where(c => c.UserId == currentUserId && c.Status.ToLower() == "active").ToList();
+               
+                if (ItemsList.Any())
+                {
+
+                    foreach (var item in ItemsList)
+                    {
+                        var product = _dbContext.Products.Where(p => p.Id == item.ProductId && p.Status.ToLower() == "active").FirstOrDefault();
+                        if (product != null)
+                        {
+                            CartDisplayDto cart = new CartDisplayDto();
+                            cart.CartId = item.Id;
+                            cart.ProductId = item.ProductId;
+                            cart.ProductDescription = product.ProductDescription;
+                            cart.ProductName = product.ProductName;
+                            cart.Quantity = item.Quantity;
+                            cart.SellingAmount = item.Price == null ? 0 : Convert.ToDecimal(item.Price);
+                            cart.MRPAmount = product.MRPAmount;
+                            cart.ProductImage = await CommonMethods.ConvertImgToBase64(product.ProductImage);
+                            cart.ProductCategory = product.ProductCategory;
+                            cartDisplayDtos.Add(cart);
+                        }
+                    }
+
+                }
+            }
+            return Ok(cartDisplayDtos);
+
+        }
+
+        [HttpPost]
+        [Route("update-item-quantity")]
+        public async Task<IActionResult> UpdateQuantity(AddToCartDto request)
         {
             int currentUserId = JwtDetailsFetch.GetCurrentUserId(_httpContextAccessor);
-            var ItemsList =  _dbContext.Carts.Where(c=>c.UserId==currentUserId && c.Status.ToLower()=="active").ToList();
-            List<CartDisplayDto> cartDisplayDtos = new List<CartDisplayDto>();
-            if (ItemsList.Any())
+           
+
+            if (currentUserId > 0)
             {
-                
-                foreach (var item in ItemsList)
+                var item = _dbContext.Carts.Where(c => c.UserId == currentUserId && c.ProductId == request.ProductId && c.Status.ToLower() == "active").FirstOrDefault();
+                var product = _dbContext.Products.Where(c => c.Id == request.ProductId && c.Status.ToLower() == "active").FirstOrDefault();
+                if (item == null||product==null)
                 {
-                    var product=_dbContext.Products.Where(p=>p.Id==item.ProductId).FirstOrDefault();
-                    if(product!=null)
-                    {
-                        CartDisplayDto cart=new CartDisplayDto();
-                        cart.ProductId = item.ProductId;
-                        cart.ProductDescription = product.ProductDescription;
-                        cart.ProductName = product.ProductName;
-                        cart.Quantity=item.Quantity;
-                        cart.SellingAmount = product.SellingAmount;
-                        cart.ProductImage = CommonMethods.ConvertImgToBase64(product.ProductImage);
-                        cart.ProductCategory = product.ProductCategory;
-                        cartDisplayDtos.Add(cart);
-                    }
+                    return Ok(new Response { Status = "Failed", Message = "Item does not exist" });
+
                 }
-      
+                item.Quantity= request.Quantity;
+                item.Price = product.SellingAmount * request.Quantity;
+                 _dbContext.Update(item);
+                await _dbContext.SaveChangesAsync();
+                return Ok(new Response { Status = "Success", Message = "Quantity updated" });
+
+            }
+            else
+            {
+                return Ok(new Response { Status = "Failed", Message = "Unauthorized" });
+
             }
 
-            return Ok(cartDisplayDtos);
+        }
+        [HttpPost]
+        [Route("delete-cart-item")]
+        public async Task<IActionResult> DeleteCartItem(IdRequest request)
+        {
+            try
+            {
+                var item = _dbContext.Carts.Where(c => c.Id == request.Id && c.Status.ToLower() == "active").FirstOrDefault();
+                if (item == null)
+                {
+                    return Ok(new Response { Status = "Failed", Message = "Item does not exist" });
+
+                }
+                item.Status = "Inactive";
+                _dbContext.Update(item);
+                await _dbContext.SaveChangesAsync();
+                return Ok(new Response { Status = "Success", Message = "Item removed successfully" });
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+        [HttpGet]
+        [Route("get-cart-itemscount")]
+        public async Task<IActionResult> GetCartItemsCount()
+        {
+            try
+            {
+                int currentUserId = JwtDetailsFetch.GetCurrentUserId(_httpContextAccessor);
+
+                var item = _dbContext.Carts.Where(c => c.UserId == currentUserId && c.Status.ToLower() == "active").ToList();
+               
+                return Ok(item.Count);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
         }
     }

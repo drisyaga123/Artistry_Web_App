@@ -24,7 +24,7 @@ namespace eCommerce_API.Common
     public static class CommonMethods
     {
 
-        public static string ConvertImgToBase64(string filePath)
+        public static async Task<string> ConvertImgToBase64(string filePath)
         {
             if (!string.IsNullOrWhiteSpace(filePath) && System.IO.File.Exists(filePath))
             {

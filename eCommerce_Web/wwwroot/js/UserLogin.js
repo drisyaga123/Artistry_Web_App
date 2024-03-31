@@ -34,12 +34,13 @@ function submitLogin() {
                 localStorage.setItem("islogin", "1");
                 if (response.role.toLowerCase() === "customer") {
                     window.location.href = redirectUrl.userLoginRedirection;
+                    localStorage.setItem("isCustomerLogin", "1");
                 }
                 else if (response.role.toLowerCase() === "admin") {
                     window.location.href = redirectUrl.userLoginRedirection;
                 }
                 else if (response.role.toLowerCase() === "seller") {
-                    window.location.href = redirectUrl.userLoginRedirection;
+                    window.location.href = redirectUrl.sellerDashBoard;
                 }
 
 

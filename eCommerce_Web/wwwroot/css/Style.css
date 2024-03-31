@@ -1,4 +1,9 @@
-﻿.close {
+﻿.required-field::after {
+    content: "*";
+    color: red; /* Adjust color as needed */
+    margin-left: 3px; /* Adjust spacing as needed */
+}
+.close {
     float: right;
     position: relative;
     background-color: transparent;
@@ -71,6 +76,256 @@ button.closeModal {
 }
 .cursor_poniter {
     cursor: pointer; /* Change cursor to hand when hovering over pagination links */
+}
+
+.nav-item-bg {
+    border-bottom: 1px solid #ccc; /* Change the color and style as needed */
+    padding: 10px;
+}
+
+.nav-link {
+    font-size: 20px; /* Increase font size */
+    line-height: 30px; /* Increase line height */
+    color: #000000 !important
+}
+
+    .nav-link:hover {
+        color: #a25858 !important; /* Change font color to #a25858 on hover and when active */
+    }
+
+.nav-item-bg:hover {
+    background-color: #e4e4e4; /* Change to desired background color on hover */
+    border-radius: 10px;
+    transition: background-color 0.3s; /* Add smooth transition effect */
+}
+
+.nav-item-bg.active {
+    background-color: #e4e4e4; /* Change to desired background color on hover */
+    border-radius: 10px;
+    color: #a25858 !important; /* Set font color for active state */
+}
+
+.sidebar_layout {
+    float: left;
+    width: 230px; /* Adjust the width of the sidebar as needed */
+    height: 100%; /* Adjust the height of the sidebar as needed */
+    background-color: #f0f0f0;
+}
+
+.content_page {
+    margin-left: 250px; /* Adjust the margin to ensure content does not overlap with sidebar */
+    margin-top:100px;
+}
+.success-animation {
+    margin: 150px auto;
+}
+
+.checkmark {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 2;
+    stroke: #4bb71b;
+    stroke-miterlimit: 10;
+    box-shadow: inset 0px 0px 0px #4bb71b;
+    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+    position: relative;
+    top: 5px;
+    right: 5px;
+    margin: 0 auto;
+}
+
+.checkmark__circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+    stroke: #4bb71b;
+    fill: #fff;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark__check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+.success-label {
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    opacity: 0; /* Initially hidden */
+    animation: fadeInLabel 1s ease-in-out forwards; /* Fade-in animation */
+}
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* ensure it appears above other content */
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+}
+.content {
+    flex-grow: 5;
+    max-height: calc(100vh - 10px); /* Adjust the value (50px) based on your footer height */
+}
+.footer {
+    text-align: center;
+    position: sticky;
+    bottom: 0;
+}
+.gradient-custom-2 {
+    /* fallback for old browsers */
+    background: #a1c4fd;
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(161, 196, 253, 1), rgba(194, 233, 251, 1));
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(161, 196, 253, 1), rgba(194, 233, 251, 1))
+}
+
+#progressbar-1 {
+    color: #455A64;
+}
+
+    #progressbar-1 li {
+        list-style-type: none;
+        font-size: 13px;
+        width: 33.33%;
+        float: left;
+        position: relative;
+    }
+.stepperChange li{
+    list-style-type: none !important;
+    font-size: 13px !important;
+    width: 50% !important;
+    float: left !important;
+    position: relative !important;
+}
+
+    #progressbar-1 #step1:before {
+        content: "1";
+        color: #fff;
+        width: 29px;
+        margin-left: 22px;
+        padding-left: 11px;
+    }
+
+    #progressbar-1 #step2:before {
+        content: "2";
+        color: #fff;
+        width: 29px;
+    }
+.stepperChange #step2:before {
+    content: "2";
+    color: #fff;
+    width: 29px;
+    margin-left:220px !important;
+}
+
+    #progressbar-1 #step3:before {
+        content: "3";
+        color: #fff;
+        width: 29px;
+        margin-right: 22px;
+        text-align: center;
+    }
+
+    #progressbar-1 li:before {
+        line-height: 29px;
+        display: block;
+        font-size: 12px;
+        background: #455A64;
+        border-radius: 50%;
+        margin: auto;
+        
+    }
+
+    #progressbar-1 li:after {
+        content: '';
+        width: 80%;
+        height: 2px;
+        background: #455A64;
+        position: absolute;
+        left: 0%;
+        right: 0%;
+        top: 15px;
+        z-index: -1;
+    }
+
+    #progressbar-1 li:nth-child(2):after {
+        left: 50%
+    }
+
+
+    #progressbar-1 li:nth-child(1):after {
+        left: 25%;
+        width: 150%
+    }
+.stepperChange li:nth-child(1):after {
+    left: 18% !important;
+    width: 121% !important;
+}
+    #progressbar-1 li:nth-child(3):after {
+        left: 25%;
+        width: 50%;
+    }
+.stepperChange li:nth-child(3):after {
+    left: 25%;
+    width: 60% !important;
+}
+    #progressbar-1 li.active:before,
+    #progressbar-1 li.active:after {
+        background: #1266f1;
+    }
+.stepperChange li.active:nth-child(3):before {
+    background: #FF0000 !important;
+}
+.card-stepper {
+    z-index: 0
+}
+
+/* Fade-in animation for the label */
+@keyframes fadeInLabel {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes stroke {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes scale {
+    0%, 100% {
+        transform: none;
+    }
+
+    50% {
+        transform: scale3d(1.1, 1.1, 1);
+    }
+}
+
+@keyframes fill {
+    100% {
+        box-shadow: inset 0px 0px 0px 30px #4bb71b;
+    }
 }
 @keyframes spin {
     0% {

@@ -8,5 +8,10 @@ namespace eCommerce_Web.Controllers
         {
             return View();
         }
+        public IActionResult RegisterOptions()
+        {
+            return View();
+        }
+
     }
 }

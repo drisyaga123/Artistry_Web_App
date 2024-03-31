@@ -5,118 +5,87 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
-
+    <link href="~/css/style.css" rel="stylesheet" />
     <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-
-    <style>
-        .nav-item-bg {
-            border-bottom: 1px solid #ccc; /* Change the color and style as needed */
-            padding: 10px;
-        }
-
-        .nav-link {
-            font-size: 20px; /* Increase font size */
-            line-height: 30px; /* Increase line height */
-            color: #000000 !important
-        }
-
-            .nav-link:hover {
-                color: #a25858 !important; /* Change font color to #a25858 on hover and when active */
-            }
-
-        .nav-item-bg:hover {
-            background-color: #e4e4e4; /* Change to desired background color on hover */
-            border-radius: 10px;
-            transition: background-color 0.3s; /* Add smooth transition effect */
-        }
-
-        .nav-item-bg.active {
-            background-color: #e4e4e4; /* Change to desired background color on hover */
-            border-radius: 10px;
-            color: #a25858 !important; /* Set font color for active state */
-        }
-    </style>
+ 
 </head>
 <body>
-    <section>
-        <div class="container-fluid">
-            <div class="row flex-nowrap">
-                <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light shadow">
-                    <div class="flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+    <div class="loader-wrapper d-none" id="loader">
+        <div class="loader"></div>
+    </div>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <img src="~/image/logo.png"  width="100"/>
+            <div class="container-fluid">
 
-                        <div class="nav flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                            <div class="w-100 nav-item-bg">
-                                <a href="#" class="nav-link align-middle px-0" onclick="toggleActive(this)">
-                                    <i class="fa fa-home" aria-hidden="true"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
-                                </a>
-                            </div>
-                            @* <div>
-                            <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                            <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Dashboard</span>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav mb-2 mb-lg-0 me-4">
+                        <!-- Cart Button -->
+                        <li class="nav-item">
+                            <a class="nav-link position-relative" href="~/Product/Cart">
+                                <i class="fas fa-shopping-cart fa-lg"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cardItemCount">
+                                    
+                                    <span class="visually-hidden">unread messages</span>
+                                </span>
                             </a>
-                            <div class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
-                            <div class="w-100">
-                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 1 </a>
-                            </div>
-                            <div>
-                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 2 </a>
-                            </div>
-                            </div>
-                            </div> *@
-                            <div class="w-100 nav-item-bg">
-                                <a href="#" class="nav-link px-0 align-middle" onclick="toggleActive(this)">
-                                    <i class="fa fa-table" aria-hidden="true"></i> <span class="ms-1 d-none d-sm-inline">Your Orders</span>
-                                </a>
-                            </div>
-                            <div class="w-100 nav-item-bg">
-                                <a href="#" class="nav-link px-0 align-middle" onclick="toggleActive(this)">
-                                    <i class="fa fa-table" aria-hidden="true"></i> <span class="ms-1 d-none d-sm-inline">Payments</span>
-                                </a>
-                            </div>
-                            <div class="w-100 nav-item-bg">
-                                <a href="#" class="nav-link px-0 align-middle" onclick="toggleActive(this)">
-                                    <i class="fa fa-table" aria-hidden="true"></i> <span class="ms-1 d-none d-sm-inline">Account</span>
-                                </a>
-                                <div class="w-100 nav-item-bg">
-                                    <a href="#" class="nav-link px-0 align-middle" onclick="toggleActive(this)">
-                                        <i class="fa fa-table" aria-hidden="true"></i> <span class="ms-1 d-none d-sm-inline">Product review</span>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                                <div class="w-100 nav-item-bg">
-                                    <a href="#" class="nav-link px-0 align-middle" onclick="toggleActive(this)">
-                                        <i class="fa fa-table" aria-hidden="true"></i> <span class="ms-1 d-none d-sm-inline">Purchased Product</span>
-                                    </a>
-                                </div>
-                                
-                                </div>
-                            </div>
-                            
+           
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <!-- User Image -->
+                      
+                        <!-- Logout Button -->
+                        <li class="nav-item">
+                            <a class="btn btn-warning" onclick="logoutUser()">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section class="sidebar_layout fixed-top" style="margin-top:78px">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 px-0 bg-light shadow" style="height: 100vh;">
+                    <div class="pt-3 pb-4 px-3">
+                        <div class="w-100 nav-item-bg">
+                            <a href="~/UserDashboard/UserDashboard" class="nav-link align-middle px-0" onclick="toggleActive(this)">
+                                <i class="fa fa-user" aria-hidden="true"></i> <span class="ms-1 d-none d-sm-inline">Profile</span>
+                            </a>
                         </div>
-
+                        <div class="w-100 nav-item-bg">
+                            <a href="~/UserDashboard/Products" class="nav-link align-middle px-0" onclick="toggleActive(this)">
+                                <i class="fa fa-list" aria-hidden="true"></i>
+                                <span class="ms-1 d-none d-sm-inline">Products</span>
+                            </a>
+                        </div>
+                        <div class="w-100 nav-item-bg">
+                            <a href="~/UserDashboard/OrderHistory" class="nav-link align-middle px-0" onclick="toggleActive(this)">
+                                <i class="fa fa-history" aria-hidden="true"></i>
+                                <span class="ms-1 d-none d-sm-inline">Your Orders</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
-
     </section>
     <div>
         @RenderBody()
     </div>
+
+    <script src="~/lib/jquery/jquery.min.js"></script>
+
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/font-awesome/js/all.min.js"></script>
-    <script>
-        function toggleActive(element) {
-            var parent = element.closest('.nav-item-bg');
-            var siblings = parent.parentElement.querySelectorAll('.nav-item-bg');
-            siblings.forEach(function (sibling) {
-                sibling.classList.remove('active');
-            });
-
-            parent.classList.add('active');
-        }
-    </script>
+    <script src="~/lib/custom_alert/jquery.bootstrap-growl.min.js"></script>
+    <script src="~/js/common.js"></script>
+    <script src="~/js/userlayout.js"></script>
+    @RenderSection("Scripts", false)
+ <script>
+        var userName = localStorage.getItem("username");
+        $("#headerUserName").html(userName);
+ </script>
 </body>
 </html>

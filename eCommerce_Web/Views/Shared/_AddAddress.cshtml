@@ -1,0 +1,65 @@
+﻿<!-- Modal start -->
+<div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addAddressModalLabel">Add Address</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="addrfirstname" class="form-label required-field">First name</label>
+                            <input type="text" class="form-control addrInput" id="addrfirstname">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="addrlastname" class="form-label required-field">Last name</label>
+                            <input type="text" class="form-control addrInput" id="addrlastname">
+                        </div>
+                        <div class="col-12">
+                            <label for="addraddress" class="form-label required-field">Address</label>
+                            <textarea type="text" class="form-control addrInput" id="addraddress"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <label for="addrphone" class="form-label required-field">Contact No.</label>
+                            <input type="number" maxlength="10" class="form-control addrInput" id="addrphone" />
+                        </div>
+                        <div class="col-12">
+                            <label for="addrlandmark" class="form-label required-field">Land mark</label>
+                            <input type="text" class="form-control addrInput" id="addrlandmark" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="addrstate" class="form-label required-field">State</label>
+                            <select class="form-select addrInput" id="addrstate">
+                                <option disabled selected value="">Choose State</option>
+                                <option value="Kerala">Kerala</option>
+                                <option value="Tamilnadu">Tamilnadu</option>
+                                <option value="Karnataka">Karnataka</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="addrzipcode" class="form-label required-field">Zip code</label>
+                            <input type="number" class="form-control addrInput" id="addrzipcode">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="addrcity" class="form-label required-field">City</label>
+                            <input type="text" class="form-control addrInput" id="addrcity">
+                        </div>
+                       
+                    </div>
+                    <hr />
+                    <div class="mt-3 mb-3 d-flex justify-content-between align-items-center">
+
+                        <button type="button" class="btn btn-primary btn-block w-100 me-3" id="btnAddAddr" onclick="addAddress()">Add</button>
+                        <button type="button" class="btn btn-primary btn-block w-100 me-3 d-none" id="btnUpdateAddr" onclick="updateAddress()">Update</button>
+                        <button type="button" class="btn btn-warning btn-block w-100" onclick="hideAddrModal()">Close</button>
+    
+                    </div>
+                </form>
+            </div>
+           
+        </div>
+    </div>
+</div>
+<!-- Modal end -->

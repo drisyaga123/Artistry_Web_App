@@ -265,20 +265,33 @@ namespace eCommerce_API.Controllers
         {
             try
             {
-                listFilteredProducts listFilteredProducts=new listFilteredProducts();   
-                var totalCount = await _dbContext.Products
-    .Where(p => p.Status.ToLower() == "active")
-    .CountAsync();
+                listFilteredProducts listFilteredProducts=new listFilteredProducts();
+                var query = _dbContext.Products
+           .Where(p => p.Status.ToLower() == "active");
+
+                // Apply category filter if provided
+                if (productFilter.Category != null && productFilter.Category.Length > 0)
+                {
+                    query = query.Where(p => productFilter.Category.Contains(p.ProductCategory));
+                }
+
+                // Apply subcategory filter if provided
+                if (productFilter.SubCategory != null && productFilter.SubCategory.Length > 0)
+                {
+                    query = query.Where(p => productFilter.SubCategory.Contains(p.SubCategory));
+                }
+                var totalCount = await query.CountAsync();
+
 
                 // Calculate total pages
                 listFilteredProducts.TotalPages = (int)Math.Ceiling((double)totalCount / productFilter.PageSize);
 
-                var products = await _dbContext.Products
-                    .Where(p => p.Status.ToLower() == "active")
-                    .OrderByDescending(p => p.CreatedDate)
-            .Skip((productFilter.PageIndex - 1) * productFilter.PageSize)
-            .Take(productFilter.PageSize)
-            .ToListAsync();
+                var products = await query
+                     .OrderByDescending(p => p.CreatedDate)
+                     .Skip((productFilter.PageIndex - 1) * productFilter.PageSize)
+                     .Take(productFilter.PageSize)
+                     .ToListAsync();
+
 
                 if (products.Count > 0)
                 {

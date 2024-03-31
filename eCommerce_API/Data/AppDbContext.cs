@@ -14,6 +14,9 @@ namespace eCommerce_API.Data
         //public DbSet<Seller> Sellers { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Cart> Carts { get; set; }
+        public DbSet<DeliveryAddress> DeliveryAddresses { get; set; }
+        public DbSet<OrderMaster> OrderMaster { get; set; }
+
         //public DbSet<Delivery> Deliveries { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

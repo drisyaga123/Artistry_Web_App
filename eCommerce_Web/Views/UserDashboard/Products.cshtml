@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewData["Title"] = "Products";
+    Layout = "~/Views/Shared/_UserdashboardLayout.cshtml";
+}
+
+<section class="content_page">
+@{
+    Html.RenderPartial("_ProductsDisplay");
+}
+</section>
+@section Scripts{
+    <script src="~/js/productlist.js"></script>
+}

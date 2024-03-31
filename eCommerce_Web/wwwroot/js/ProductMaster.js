@@ -171,7 +171,7 @@ function closeModal() {
     $('#prodfilebutton').val('');
 }
 function validateProductMaster() {
-    debugger
+    
     let isValid = true;
     let productName = $("#product_name").val();
     let description = $("#product_desc").val();
