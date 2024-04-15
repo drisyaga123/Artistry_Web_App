@@ -2,6 +2,7 @@
 using eCommerce_API.Data;
 using eCommerce_API.Dtos;
 using eCommerce_API.Models;
+using eCommerce_API.Services.Email;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,12 +19,14 @@ namespace eCommerce_API.Controllers
         private readonly IConfiguration _configuration;
         private readonly AppDbContext _dbContext;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IEmailService _emailService;
 
-        public OrderController(IConfiguration configuration, AppDbContext dbContext, IHttpContextAccessor httpContextAccessor)
+        public OrderController(IConfiguration configuration, AppDbContext dbContext, IHttpContextAccessor httpContextAccessor, IEmailService emailService)
         {
             _configuration = configuration;
             _dbContext = dbContext;
             _httpContextAccessor = httpContextAccessor;
+            _emailService = emailService;
         }
         [HttpPost]
         [Route("place-order")]
@@ -133,9 +136,10 @@ namespace eCommerce_API.Controllers
                         _dbContext.Carts.UpdateRange(cartList);
                     }
                     await _dbContext.SaveChangesAsync();
-
+                    _emailService.SendOrderConfirmation(currentUserId, orderMasterList);
                     // Commit the transaction
                     scope.Complete();
+                    
                     return Ok(new Response { Status = "Success", Message = "Order placed successfully!" });
 
                 }
