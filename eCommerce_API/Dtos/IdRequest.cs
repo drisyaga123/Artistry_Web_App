@@ -4,7 +4,7 @@ namespace eCommerce_API.Dtos
 {
     public class IdRequest
     {
-        public int Id { get; set; }
+        public int Id { get; set; } = 0;
     }
     public class ProductFilter
     {

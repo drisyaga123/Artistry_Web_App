@@ -7,117 +7,84 @@
     <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
 
     <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css" rel="stylesheet">
 
-    <style>
-        .nav-item-bg {
-            border-bottom: 1px solid #ccc; /* Change the color and style as needed */
-            padding: 10px;
-        }
-        .nav-link {
-            font-size: 20px; /* Increase font size */
-            line-height: 30px; /* Increase line height */
-            color: #000000 !important
-        }
+    <script src="~/lib/jquery/jquery.min.js"></script>
 
-            .nav-link:hover {
-                color: #a25858 !important; /* Change font color to #a25858 on hover and when active */
-            }
-        .nav-item-bg:hover {
-            background-color: #e4e4e4; /* Change to desired background color on hover */
-            border-radius: 10px;
-                 transition: background-color 0.3s; /* Add smooth transition effect */
-            }
-
-        .nav-item-bg.active {
-            background-color: #e4e4e4; /* Change to desired background color on hover */
-            border-radius: 10px;
-            color: #a25858 !important; /* Set font color for active state */
-        }
-    </style>
 </head>
 <body>
-    <section>
-        <div class="container-fluid">
-            <div class="row flex-nowrap">
-                <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light shadow">
-                    <div class="flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+    <div class="loader-wrapper d-none" id="loader">
+        <div class="loader"></div>
+    </div>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <img src="~/image/logo2.jpg" width="70" />
+            <div class="container-fluid">
 
-                        <div class="nav flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                            <div class="w-100 nav-item-bg">
-                                <a href="#" class="nav-link align-middle px-0" onclick="toggleActive(this)">
-                                    <i class="fa fa-home" aria-hidden="true"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
-                                </a>
-                            </div>
-                            @* <div>
-                            <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                            <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Dashboard</span>
-                            </a>
-                            <div class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
-                            <div class="w-100">
-                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 1 </a>
-                            </div>
-                            <div>
-                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 2 </a>
-                            </div>
-                            </div>
-                            </div> *@
-                            <div class="w-100 nav-item-bg">
-                                <a href="#" class="nav-link px-0 align-middle" onclick="toggleActive(this)">
-                                    <i class="fa fa-table" aria-hidden="true"></i> <span class="ms-1 d-none d-sm-inline">Orders</span>
-                                </a>
-                            </div>
-                            
-                            <div class="w-100">
-                                <div class="nav-item-bg">
-                                    <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle" onclick="toggleActive(this)">
-                                        <i class="fa-solid fa-list"></i> <span class="ms-1 d-none d-sm-inline">Products</span>
-                                    </a>
-                                </div>
-                               
-                                <div class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
-                                    <div class="nav-item-bg">
-                                        <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 1</a>
-                                    </div>
-                                    <div class="nav-item-bg">
-                                        <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 2</a>
-                                    </div>
-                                    <div class="nav-item-bg">
-                                        <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 3</a>
-                                    </div>
-                                    <div class="nav-item-bg">
-                                        <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 4</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w-100 nav-item-bg">
-                                <a href="#" class="nav-link px-0 align-middle" onclick="toggleActive(this)">
-                                    <i class="fa-solid fa-user"></i> <span class="ms-1 d-none d-sm-inline">Customers</span>
-                                </a>
-                            </div>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+
+                    <ul class="navbar-nav">
+                        <!-- User Image -->
+                        <!-- Logout Button -->
+                        <li class="nav-item">
+                            <a class="btn btn-warning" onclick="logoutUser()">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section class="sidebar_layout fixed-top" style="margin-top:78px">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 px-0 bg-light shadow" style="height: 100vh;">
+                    <div class="pt-3 pb-4 px-3">
+                        
+                        @* <div>
+                        <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                        <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Dashboard</span>
+                        </a>
+                        <div class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+                        <div class="w-100">
+                        <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 1 </a>
                         </div>
-                     
+                        <div>
+                        <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 2 </a>
+                        </div>
+                        </div>
+                        </div> *@
+
+
+                        <div class="w-100 nav-item-bg">
+                            <a href="~/AdminDashboard/Customers" class="nav-link px-0 align-middle" onclick="toggleActive(this)">
+                                <i class="fa-solid fa-circle-info"></i> <span class="ms-1 d-sm-inline">Customer Details</span>
+                            </a>
+                        </div>
+                        <div class="w-100 nav-item-bg">
+                            <a href="~/AdminDashboard/SellerDetails" class="nav-link px-0 align-middle" onclick="toggleActive(this)">
+                                <i class="fa-solid fa-circle-info"></i> <span class="ms-1  d-sm-inline">Seller Details</span>
+                            </a>
+                        </div>
+                        
                     </div>
                 </div>
-               
             </div>
         </div>
-
     </section>
+
     <div>
         @RenderBody()
     </div>
+    <script src="~/lib/jquery/jquery.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="~/lib/font-awesome/js/all.min.js"></script>
-    <script>
-        function toggleActive(element) {
-            var parent = element.closest('.nav-item-bg');
-            var siblings = parent.parentElement.querySelectorAll('.nav-item-bg');
-            siblings.forEach(function (sibling) {
-                sibling.classList.remove('active');
-            });
+    <script src="~/lib/custom_alert/jquery.bootstrap-growl.min.js"></script>
+    <script src="~/lib/font-awesome/js/all.min.js"></script>
+    @* <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> *@
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    @* <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-XXX" crossorigin="anonymous"></script> *@
+    <script src="~/js/common.js"></script>
+    @RenderSection("Scripts", false)
 
-            parent.classList.add('active');
-        }
-    </script>
 </body>
 </html>

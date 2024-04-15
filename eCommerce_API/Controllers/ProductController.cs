@@ -77,16 +77,24 @@ namespace eCommerce_API.Controllers
 
             }
         }
-        [HttpGet]
+        [HttpPost]
         [Route("get-all-products")]
-        public async Task<IActionResult> GetAllProducts()
+        public async Task<IActionResult> GetAllProducts(IdRequest idRequest)
         {
             try
             {
-                var currentUser = JwtDetailsFetch.GetCurrentUserId(_httpContextAccessor);
-                if(currentUser<=0)
+                int currentUser = 0;
+                if (idRequest.Id <= 0)
                 {
-                    return BadRequest("Unauthorized");
+                    currentUser = JwtDetailsFetch.GetCurrentUserId(_httpContextAccessor);
+                    if (currentUser <= 0)
+                    {
+                        return BadRequest("Unauthorized");
+                    }
+                }
+                else
+                {
+                    currentUser=idRequest.Id;
                 }
               
                 var prod_list = _dbContext.Products.Where(x=>x.SellerId==currentUser && x.Status.ToLower()=="active").ToList();

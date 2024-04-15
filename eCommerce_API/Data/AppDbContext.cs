@@ -16,6 +16,7 @@ namespace eCommerce_API.Data
         public DbSet<Cart> Carts { get; set; }
         public DbSet<DeliveryAddress> DeliveryAddresses { get; set; }
         public DbSet<OrderMaster> OrderMaster { get; set; }
+        public DbSet<AppUsers> AppUsers { get; set; }
 
         //public DbSet<Delivery> Deliveries { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

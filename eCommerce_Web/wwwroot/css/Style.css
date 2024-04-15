@@ -46,7 +46,9 @@ button.closeModal {
     text-shadow: 0 1px 0 #fff;
     opacity: .5;
 }
-
+.container strong {
+    font-family:'Baskerville Old Face';
+}
 /*Loader*/
 .loader-wrapper {
     position: fixed;
@@ -342,3 +344,4 @@ button.closeModal {
         text-align: center
     }
 }
+

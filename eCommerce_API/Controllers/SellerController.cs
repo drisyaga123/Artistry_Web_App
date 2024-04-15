@@ -12,7 +12,7 @@ namespace eCommerce_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class SellerController : ControllerBase
     {
         private readonly UserManager<AppUsers> _userManager;
@@ -114,5 +114,28 @@ namespace eCommerce_API.Controllers
 
             }
         }
-    }
+		[HttpGet]
+		[Route("get-all-sellerdetails")]
+		public async Task<IActionResult> GetAllSellers()
+		{
+			try
+			{
+
+				var sellers = await _userManager.GetUsersInRoleAsync(UserRoles.Seller);
+                if (sellers.Count >0)
+                {
+                    return Ok(sellers.OrderByDescending(x=>x.Id));
+                }
+                else
+                {
+					return NotFound("No sellers found.");
+				}
+			}
+			catch (Exception ex)
+			{
+				return BadRequest("Error occured during the process");
+
+			}
+		}
+	}
 }

@@ -50,7 +50,7 @@ function placeOrder() {
                 if (response.status.toLowerCase() === "success") {
                     $("#summaryList").addClass("d-none");
                     $("#orderSuccess").removeClass("d-none");
-
+                    getCartItemCount();
                 }
                 else {
                     alertFailed(response.message);

@@ -108,7 +108,10 @@ function getAllOrders() {
     $("#loader").removeClass("d-none");
     $.ajax({
         url: apiUrls.get_all_orders,
-        type: "GET",
+        type: "POST",
+        data: JSON.stringify({
+            Id: id
+        }),
         contentType: "application/json",
         headers: { "Authorization": 'Bearer ' + localStorage.getItem('jwtToken') },
         success: function (response) {

@@ -164,7 +164,11 @@ function getAllAddresses(callback) {
         },
         error: function (xhr, status, error) {
             alertFailed(xhr.responseText);
+            $("#addrSect").empty();
+            $("#addrSect").addClass('d-none');
+            $("#noAddress").removeClass('d-none');
             callback();
+
         }
     });
 }

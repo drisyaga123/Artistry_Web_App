@@ -129,7 +129,7 @@ function getAllProducts() {
     $("#loader").removeClass("d-none");
     $.ajax({
         url: apiUrls.get_all_products,
-        type: "GET",
+        type: "POST",
         contentType: "application/json",
         headers: { "Authorization": 'Bearer ' + localStorage.getItem('jwtToken') },
         success: function (response) {

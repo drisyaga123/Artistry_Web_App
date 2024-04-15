@@ -7,7 +7,7 @@ var apiUrls = {
     add_product: apiBaseUrl +"/api/Product/add-product",
     get_all_products : apiBaseUrl +"/api/Product/get-all-products",
     get_product_image : apiBaseUrl +"/api/Product/get-product-image",
-    delete_product: apiBaseUrl +"/api/Product/delete_product",
+    delete_product: apiBaseUrl +"/api/Product/delete-product",
     get_product: apiBaseUrl +"/api/Product/get-product",
     update_product: apiBaseUrl +"/api/Product/update-product",
     get_user_details: apiBaseUrl +"/api/Seller/get-user-details",
@@ -29,16 +29,18 @@ var apiUrls = {
     get_orderbyid : apiBaseUrl +"/api/Order/get-orderbyid",
     get_all_orderstoship : apiBaseUrl +"/api/Order/get-all-orderstoship",
     approve_order : apiBaseUrl +"/api/Order/approve-order",
+    get_all_sellerdetails : apiBaseUrl +"/api/Seller/get-all-sellerdetails",
+    get_all_customerdetails: apiBaseUrl +"/api/Customer/get-all-customerdetails",
 
 }
 
 var redirectUrl = {
     userLoginRedirection: webBaseUrl +"/Home/Main",
     sellerDashBoard: webBaseUrl +"/SellerDashboard/Account",
-    userDashBoard: webBaseUrl +"/UserDashboard/UserDashboard",
+    userDashBoard: webBaseUrl + "/UserDashboard/UserDashboard",
+    adminDashBoard: webBaseUrl + "/AdminDashboard/Customers",
     orderSummaryPage: webBaseUrl +"/Product/OrderSummary",
-    adminLoginRedirection: "",
-    sellerLoginRedirection:"",
+    
     loginPage:webBaseUrl+"/Login/UserLogin"
 }
 $(document).ajaxError(function (event, jqxhr, settings, thrownError) {

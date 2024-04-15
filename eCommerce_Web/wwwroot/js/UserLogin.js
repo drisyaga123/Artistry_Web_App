@@ -37,7 +37,7 @@ function submitLogin() {
                     localStorage.setItem("isCustomerLogin", "1");
                 }
                 else if (response.role.toLowerCase() === "admin") {
-                    window.location.href = redirectUrl.userLoginRedirection;
+                    window.location.href = redirectUrl.adminDashBoard;
                 }
                 else if (response.role.toLowerCase() === "seller") {
                     window.location.href = redirectUrl.sellerDashBoard;

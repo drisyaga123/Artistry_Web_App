@@ -149,13 +149,22 @@ namespace eCommerce_API.Controllers
 
 
         }
-        [HttpGet]
+        [HttpPost]
         [Route("get-all-orders")]
-        public async Task<IActionResult> GetAllOrders()
+        public async Task<IActionResult> GetAllOrders(IdRequest idRequest)
         {
             try
             {
-                var currentUser = JwtDetailsFetch.GetCurrentUserId(_httpContextAccessor);
+                int currentUser = 0;
+                if (idRequest.Id <= 0)
+                {
+                    currentUser = JwtDetailsFetch.GetCurrentUserId(_httpContextAccessor);
+                }
+                else
+                {
+                    currentUser=idRequest.Id;
+                }
+               
                 if (currentUser <= 0)
                 {
                     return BadRequest("Unauthorized");

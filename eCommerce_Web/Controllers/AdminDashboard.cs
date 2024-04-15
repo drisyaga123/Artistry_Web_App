@@ -8,5 +8,14 @@ namespace eCommerce_Web.Controllers
         {
             return View();
         }
+        public IActionResult Customers()
+        {
+            return View();
+        }
+        public IActionResult SellerDetails()
+        {
+            return View();
+        }
+        
     }
 }

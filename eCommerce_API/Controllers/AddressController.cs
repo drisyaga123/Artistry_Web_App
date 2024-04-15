@@ -33,7 +33,7 @@ namespace eCommerce_API.Controllers
                 {
                     return BadRequest("Invalid inputs");
                 }
-                var isaddrExist = _dbContext.DeliveryAddresses.Where(x => x.FirstName.ToLower() == address.FirstName.ToLower() && x.LastName.ToLower()==address.LastName.ToLower()&&x.Phone==address.Phone).FirstOrDefault();
+                var isaddrExist = _dbContext.DeliveryAddresses.Where(x => x.FirstName.ToLower() == address.FirstName.ToLower() && x.LastName.ToLower()==address.LastName.ToLower()&&x.Phone==address.Phone&&x.Status.ToLower()=="active").FirstOrDefault();
                 if (isaddrExist != null)
                 {
                     return Ok(new Response { Status = "Failed", Message = "Address already exists!" });
