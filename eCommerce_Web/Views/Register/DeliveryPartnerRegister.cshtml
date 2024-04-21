@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "DeliveryPartnerRegister";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container  d-flex justify-content-center align-items-center screen_height">
+    <div class="card" style="width: 28rem;">
+
+        <div class="mt-3 text-center">
+            <h1>SIGN UP</h1>
+        </div>
+        <!-- Email input -->
+        @*      <div class="form-outline mb-2 mx-5">
+        <label class="form-label" for="userName">Name</label>
+        <input type="text" id="userName" class="form-control" />
+
+        </div> *@
+        <div class="form-outline mb-2 mx-5 position-relative">
+            <label class="form-label" for="userName">Name</label>
+            <input type="text" id="userName" class="form-control" required />
+            <div class="invalid-tooltip position-static" id="name-error"></div>
+        </div>
+
+        <!-- Password input -->
+        <div class="form-outline mb-2 mx-5 position-relative">
+            <label class="form-label" for="userEmail">Email</label>
+            <input type="email" id="userEmail" class="form-control" />
+            <div class="invalid-tooltip position-static" id="email-error"></div>
+
+        </div>
+        <div class="form-outline mb-2 mx-5 position-relative">
+            <label class="form-label" for="userPswd">Password</label>
+            <input type="password" id="userPswd" class="form-control" />
+            <div class="invalid-tooltip position-static" id="pswd-error"></div>
+        </div>
+        <div class="form-outline mb-2 mx-5 position-relative">
+            <label class="form-label" for="userCPswd">Confirm Password</label>
+            <input type="password" id="userCPswd" class="form-control" />
+            <div class="invalid-tooltip position-static" id="cpswd-error"></div>
+        </div>
+
+        <!-- Submit button -->
+        <div>
+            <button type="button" class="btn btn-primary mt-2 mb-2 mx-5" onclick="registerUser()">Submit</button>
+
+        </div>
+        <!-- Register buttons -->
+        <div class="text-center">
+            <p>Already you have account <a href="~/Login/UserLogin" class="reg text-decoration-none">Sign in</a></p>
+        </div>
+    </div>
+</div>
+

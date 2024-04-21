@@ -43,6 +43,7 @@ namespace eCommerce_API.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (!result.Succeeded)
                     return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+                await AddRoles();
                 if (await _roleManager.RoleExistsAsync(UserRoles.Customer))
                 {
                     await _userManager.AddToRoleAsync(user, UserRoles.Customer);
@@ -78,6 +79,7 @@ namespace eCommerce_API.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (!result.Succeeded)
                     return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+                await AddRoles();
                 if (await _roleManager.RoleExistsAsync(UserRoles.Seller))
                 {
                     await _userManager.AddToRoleAsync(user, UserRoles.Seller);
@@ -109,13 +111,7 @@ namespace eCommerce_API.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (!result.Succeeded)
                     return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
-                if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
-                    await _roleManager.CreateAsync(new IdentityRole<int>(UserRoles.Admin));
-                if (!await _roleManager.RoleExistsAsync(UserRoles.Customer))
-                    await _roleManager.CreateAsync(new IdentityRole<int>(UserRoles.Customer));
-                if (!await _roleManager.RoleExistsAsync(UserRoles.Seller))
-                    await _roleManager.CreateAsync(new IdentityRole<int>(UserRoles.Seller));
-
+                await AddRoles();
                 if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
                 {
                     await _userManager.AddToRoleAsync(user, UserRoles.Admin);
@@ -128,7 +124,39 @@ namespace eCommerce_API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPost]
+        [Route("register-deliverymanager")]
+        public async Task<IActionResult> DeliveryManagerRegister([FromBody] UserRegister model)
+        {
+            try
+            {
+                var userExists = await _userManager.FindByNameAsync(model.Username);
+                if (userExists != null)
+                    return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Delivery manager already exists!" });
 
+                AppUsers user = new AppUsers()
+                {
+                    Email = model.Email,
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    UserName = model.Username
+                };
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if (!result.Succeeded)
+                    return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Delivery manager creation failed! Please check user details and try again." });
+                await AddRoles();
+                if (await _roleManager.RoleExistsAsync(UserRoles.DeliveryManager))
+                {
+                    await _userManager.AddToRoleAsync(user, UserRoles.DeliveryManager);
+
+                }
+
+                return Ok(new Response { Status = "Success", Message = "Delivery manager added successfully!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] UserLogin model)
@@ -194,6 +222,26 @@ namespace eCommerce_API.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        private async Task<string> AddRoles()
+        {
+            try
+            {
+                if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
+                    await _roleManager.CreateAsync(new IdentityRole<int>(UserRoles.Admin));
+                if (!await _roleManager.RoleExistsAsync(UserRoles.Customer))
+                    await _roleManager.CreateAsync(new IdentityRole<int>(UserRoles.Customer));
+                if (!await _roleManager.RoleExistsAsync(UserRoles.Seller))
+                    await _roleManager.CreateAsync(new IdentityRole<int>(UserRoles.Seller));
+                if (!await _roleManager.RoleExistsAsync(UserRoles.DeliveryManager))
+                    await _roleManager.CreateAsync(new IdentityRole<int>(UserRoles.DeliveryManager));
+                return "Success";
+            }
+            catch
+            {
+                throw;
             }
         }
 

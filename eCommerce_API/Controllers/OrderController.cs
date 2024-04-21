@@ -65,6 +65,7 @@ namespace eCommerce_API.Controllers
                             orderMaster0.CreatedDate = DateTime.Now;
                             orderMaster0.SellerName = product.AppUser?.UserName;
                             orderMaster0.SellerAddress = product.AppUser?.Address;
+                            orderMaster0.ProductId = product.Id;
                             orderMaster0.ProductName = product.ProductName;
                             orderMaster0.ProductDescription = product.ProductDescription;
                             orderMaster0.MRPAmount = product.MRPAmount;
@@ -335,10 +336,127 @@ namespace eCommerce_API.Controllers
                     return Ok(new Response { Status = "Failed", Message = "Order does not exist" });
 
                 }
+                Random rand = new Random();
+                int otp = rand.Next(100000, 999999);
                 item.Status = "Shipped";
+                item.OTP= otp.ToString();
                 _dbContext.Update(item);
                 await _dbContext.SaveChangesAsync();
                 return Ok(new Response { Status = "Success", Message = "Order approved successfully" });
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+        [HttpPost]
+        [Route("get-all-usersorders")]
+        public async Task<IActionResult> GetAllUsersOrders()
+        {
+            try
+            {
+                List<OrdersToShip> ordersToShips = new List<OrdersToShip>();
+                var orders = _dbContext.OrderMaster.Where(x =>x.Status.ToLower() == "shipped" || x.Status.ToLower() == "delivered").ToList();
+
+                if (orders.Count > 0)
+                {
+
+                    foreach (var order in orders)
+                    {
+                        OrdersToShip obj = new OrdersToShip();
+                        if (!string.IsNullOrWhiteSpace(order.ProductImage))
+                        {
+                            obj.ProductImage = await CommonMethods.ConvertImgToBase64(order.ProductImage);
+                            obj.OrderId = order.OrderId;
+                            obj.ProductName = order.ProductName;
+                            obj.Id = order.Id;
+                            obj.CreatedDate = order.CreatedDate;
+                            obj.Quantity = order.Quantity;
+                            obj.Status = order.Status;
+                            obj.TotalPrice = order.TotalPrice;
+                            obj.PaymentMode = order.PaymentMode;
+                            var addr = _dbContext.DeliveryAddresses.Where(a => a.Id == order.DeliveryAddress).FirstOrDefault();
+                            if (addr != null)
+                            {
+                                obj.Address = addr.Address;
+                                obj.State = addr.State;
+                                obj.Pincode = addr.Pincode;
+                                obj.City = addr.City;
+                                obj.Landmark = addr.Landmark;
+                                obj.FirstName = addr.FirstName;
+                                obj.LastName = addr.LastName;
+                                obj.Phone = addr.Phone;
+                            }
+                            ordersToShips.Add(obj);
+                        }
+
+                    }
+                    return Ok(ordersToShips.OrderByDescending(x => x.CreatedDate));
+                }
+                return BadRequest("No orders found!");
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Error occured during the process");
+
+            }
+        }
+        [HttpPost]
+        [Route("deliver-order")]
+        public async Task<IActionResult> DeliverOrder(DeliverOrder request)
+        {
+            try
+            {
+                var item = _dbContext.OrderMaster.Where(c => c.Id == request.Id).FirstOrDefault();
+                if (item != null)
+                {
+                    if (item.OTP == request.OTP)
+                    {
+                        item.Status = "Delivered";
+                        _dbContext.Update(item);
+                        await _dbContext.SaveChangesAsync();
+                        return Ok(new Response { Status = "Success", Message = "Order delivered successfully" });
+                    }
+                    else
+                    {
+                        return Ok(new Response { Status = "Failed", Message = "Incorrect OTP" });
+                    }
+          
+                }
+                return Ok(new Response { Status = "Failed", Message = "Order does not exist" });
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+        [HttpPost]
+        [Route("rate-product")]
+        public async Task<IActionResult> RateProduct(RateProductDto request)
+        {
+            try
+            {
+                var userId = JwtDetailsFetch.GetCurrentUserId(_httpContextAccessor);
+                if (userId <= 0)
+                {
+                    return BadRequest("Unauthorized");
+                }
+                ReviewNRatings reviewNRatings = new ReviewNRatings();
+                reviewNRatings.ProductId = request.ProductId;
+                reviewNRatings.Review=request.Review;
+                reviewNRatings.Rating=request.Rating;
+                reviewNRatings.UserId= userId;
+                reviewNRatings.Status= "Active";
+                reviewNRatings.CreatedDate= DateTime.Now;
+                await _dbContext.ReviewNRating.AddAsync(reviewNRatings);
+                await _dbContext.SaveChangesAsync();
+              
+                return Ok(new Response { Status = "Success", Message = "Review Added" });
 
             }
             catch (Exception ex)

@@ -4,6 +4,7 @@ var apiUrls = {
     login: apiBaseUrl + "/api/Auth/login",
     reg_user: apiBaseUrl + "/api/Auth/register-user",
     reg_seller: apiBaseUrl +"/api/Auth/register-seller",
+    register_deliverymanager : apiBaseUrl +"/api/Auth/register-deliverymanager",
     add_product: apiBaseUrl +"/api/Product/add-product",
     get_all_products : apiBaseUrl +"/api/Product/get-all-products",
     get_product_image : apiBaseUrl +"/api/Product/get-product-image",
@@ -25,12 +26,16 @@ var apiUrls = {
     get_address : apiBaseUrl +"/api/Address/get-address",
     place_order: apiBaseUrl +"/api/Order/place-order",
     get_all_orders : apiBaseUrl +"/api/Order/get-all-orders",
+    get_all_usersorders: apiBaseUrl +"/api/Order/get-all-usersorders",
     cancel_order : apiBaseUrl +"/api/Order/cancel-order",
     get_orderbyid : apiBaseUrl +"/api/Order/get-orderbyid",
     get_all_orderstoship : apiBaseUrl +"/api/Order/get-all-orderstoship",
     approve_order : apiBaseUrl +"/api/Order/approve-order",
     get_all_sellerdetails : apiBaseUrl +"/api/Seller/get-all-sellerdetails",
     get_all_customerdetails: apiBaseUrl +"/api/Customer/get-all-customerdetails",
+    deliver_order: apiBaseUrl +"/api/Order/deliver-order",
+    rate_product : apiBaseUrl +"/api/Order/rate-product",
+    get_all_reviews: apiBaseUrl +"/api/Product/get-all-reviews",
 
 }
 
@@ -39,6 +44,7 @@ var redirectUrl = {
     sellerDashBoard: webBaseUrl +"/SellerDashboard/Account",
     userDashBoard: webBaseUrl + "/UserDashboard/UserDashboard",
     adminDashBoard: webBaseUrl + "/AdminDashboard/Customers",
+    deliveryDashBoard: webBaseUrl + "/UserDashboard/DeliveryManagement",
     orderSummaryPage: webBaseUrl +"/Product/OrderSummary",
     
     loginPage:webBaseUrl+"/Login/UserLogin"

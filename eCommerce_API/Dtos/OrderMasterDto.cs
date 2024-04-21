@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace eCommerce_API.Models
+namespace eCommerce_API.Dtos
 {
-    public class OrderMaster
+    public class OrderMasterDto
     {
-        [Key]
         public int Id { get; set; }
         [Required]
         public string OrderId { get; set; }
@@ -22,12 +21,12 @@ namespace eCommerce_API.Models
         public string PaymentMode { get; set; }
         [Required]
         public int DeliveryAddress { get; set; }
+        [Required]
+        public int DeliveryAddressDetails { get; set; }
         [Required, StringLength(50)]
         public string? SellerName { get; set; }
         [StringLength(300)]
         public string? SellerAddress { get; set; }
-     
-        public int? ProductId { get; set; }
         [Required, StringLength(50)]
         public string? ProductName { get; set; }
         [Required, StringLength(200)]
@@ -40,11 +39,10 @@ namespace eCommerce_API.Models
         public string? ProductImage { get; set; }
         [Required]
         public int Quantity { get; set; }
-        [Required,StringLength(30)]
+        [Required, StringLength(30)]
         public string Status { get; set; }
         [Required]
         public DateTime CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public string? OTP { get; set; }
     }
 }

@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewData["Title"] = "DeliveryManagement";
+    Layout = "~/Views/Shared/_DeliveryLayout.cshtml";
+}
+
+<div class="modal" tabindex="-1" id="viewAddrModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary-subtle">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="addrModal">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>Delivery Address</h5>
+                            <hr />
+                            <div id="addrDetailsDiv"></div>
+                        </div>
+                    </div>          
+                </div>
+            </div>
+            <div class="modal-footer p-1">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" id="deliverModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary-subtle">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="form-group mb-2 required">
+                        <label class="col-md-4 control-label" for="delivery_otp">OTP</label>
+                        <input id="delivery_otp" oninput="this.value = this.value.slice(0, 6)" placeholder="Enter 6 digits otp here" name="delivery_otp" class="form-control" required="" type="number">
+
+                        <div class="col-md-12" id="product-mrp-error">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer p-1">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" onclick="deliverOrder()" class="btn btn-primary">Submit</button>
+               
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content_page">
+
+  @*  <section class="vh-100">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-10 col-lg-8 col-xl-6" id="orderHistoryDiv">
+                </div>
+            </div>
+        </div>
+    </section>*@
+    <div class="container">
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Order Id</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Delivery Address</th>
+                    <th scope="col">Payment Mode</th>
+                    <th scope="col">Delivered?</th>
+                </tr>
+            </thead>
+            <tbody id="tBodyOrders">
+            </tbody>
+        </table>
+    </div>
+   
+</section>
+@section Scripts{
+    <script src="~/js/deliverymanagement.js"></script>
+}
+

@@ -21,12 +21,14 @@ namespace eCommerce_API.Controllers
         private readonly IConfiguration _configuration;
         private readonly AppDbContext _dbContext;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly UserManager<AppUsers> _userManager;
 
-        public ProductController(IConfiguration configuration, AppDbContext dbContext,IHttpContextAccessor httpContextAccessor)
+        public ProductController(IConfiguration configuration, AppDbContext dbContext,IHttpContextAccessor httpContextAccessor, UserManager<AppUsers> userManager)
         {
             _configuration = configuration;
             _dbContext = dbContext;
             _httpContextAccessor = httpContextAccessor;
+            _userManager = userManager;
         }
         [HttpPost]
         [Route("add-product")]
@@ -303,10 +305,30 @@ namespace eCommerce_API.Controllers
 
                 if (products.Count > 0)
                 {
-                    listFilteredProducts.Product_List=new List<Product>();
+                    listFilteredProducts.Product_List=new List<ProductDto>();
                     foreach(var prod in products)
                     {
-						if (!string.IsNullOrWhiteSpace(prod.ProductImage) && System.IO.File.Exists(prod.ProductImage))
+                        ProductDto productDto = new ProductDto();
+                        var ratingList=_dbContext.ReviewNRating.Where(r=>r.ProductId==prod.Id).ToList();
+                        if(ratingList.Count > 0)
+                        {
+                            int sumOfRatings = ratingList.Sum(x => x.Rating);
+                            int averageRating = (int)Math.Round((double)sumOfRatings / ratingList.Count);
+                            productDto.AverageRating = averageRating;
+                        }
+                        
+                        productDto.Id = prod.Id;
+                        productDto.SellerId = prod.SellerId;
+                        productDto.ProductName = prod.ProductName;
+                        productDto.ProductCategory = prod.ProductCategory;
+                        productDto.SubCategory = prod.SubCategory;
+                        productDto.ProductDescription = prod.ProductDescription;
+                        productDto.MRPAmount = prod.MRPAmount;
+                        productDto.SellingAmount = prod.SellingAmount;
+                        productDto.CreatedDate = prod.CreatedDate;
+                        productDto.ModifiedDate = prod.ModifiedDate;
+                        productDto.Status = prod.Status;
+                        if (!string.IsNullOrWhiteSpace(prod.ProductImage) && System.IO.File.Exists(prod.ProductImage))
 						{
 
 							byte[] imageBytes = System.IO.File.ReadAllBytes(prod.ProductImage);
@@ -316,15 +338,48 @@ namespace eCommerce_API.Controllers
 
 							// Update the ProductImage property with the Base64 string and original file extension
 							var ImgBase64 = $"data:image/{fileExtension};base64,{base64String}"; // Assuming images are JPEG format
-                            prod.ProductImage = ImgBase64;
+
+                            
+                            productDto.ProductImage = ImgBase64;
 						}
-                        listFilteredProducts.Product_List.Add(prod);
+                        listFilteredProducts.Product_List.Add(productDto);
 
                     }
                     return Ok(listFilteredProducts);
                 }
                 return BadRequest("No products found!");
 
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Error occured during the process");
+
+            }
+
+
+
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("get-all-reviews")]
+        public async Task<IActionResult> GetAllReviews(IdRequest idRequest)
+        {
+            try
+            {
+                List<RateProductResponseDto> reviewsList= new List<RateProductResponseDto>();
+                var reviews = _dbContext.ReviewNRating.Where(x => x.ProductId == idRequest.Id).OrderByDescending(x=>x.CreatedDate).ToList();
+                foreach(var review in reviews)
+                {
+                    var reviewDto = new RateProductResponseDto();
+                    reviewDto.Rating = review.Rating;
+                    reviewDto.Review= review.Review;
+                    reviewDto.CreatedDate= review.CreatedDate;
+                    var user = await _userManager.FindByIdAsync(review.UserId.ToString());
+                    reviewDto.Username = user != null ? user.UserName : "Unknown";
+                    reviewsList.Add(reviewDto);
+                }
+                return Ok(reviewsList);
+                
             }
             catch (Exception ex)
             {

@@ -42,4 +42,28 @@ namespace eCommerce_API.Dtos
         public string Phone { get; set; }
      
     }
+
+    public class DeliverOrder
+    {
+        [Required]
+        public int Id { get; set; }
+        [Required]
+        public string OTP { get; set; }
+    }
+    public class RateProductDto
+    {
+        [Required]
+        public int ProductId { get; set; }
+        [Required]
+        public int Rating { get; set; }
+        [Required]
+        public string Review { get; set; }
+    }
+    public class RateProductResponseDto
+    {
+        public int Rating { get; set; }
+        public string Review { get; set; }
+        public string Username { get; set; }
+        public DateTime CreatedDate { get; set; }
+    }
 }

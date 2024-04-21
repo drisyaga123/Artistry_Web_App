@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="loader-wrapper d-none" id="loader">
+        <div class="loader"></div>
+    </div>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <img src="~/image/logo2.jpg" width="70" />
+            <div class="container-fluid">
+
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+              
+                    <ul class="navbar-nav">
+                        <!-- User Image -->
+                        <!-- Logout Button -->
+                        <li class="nav-item">
+                            <a class="btn btn-warning" onclick="logoutUser()">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section class="sidebar_layout fixed-top" style="margin-top:78px">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 px-0 bg-light shadow" style="height: 100vh;">
+                    <div class="pt-3 pb-4 px-3">
+
+                        <div class="w-100 nav-item-bg">
+                            <a href="~/UserDashboard/DeliveryManagement" class="nav-link align-middle px-0" onclick="toggleActive(this)">
+                                <i class="fa fa-list" aria-hidden="true"></i>
+                                <span class="ms-1 d-none d-sm-inline">Delivery Management</span>
+                            </a>
+                        </div>
+            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div>
+        @RenderBody()
+    </div>
+    <script src="~/lib/jquery/jquery.min.js"></script>
+
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/font-awesome/js/all.min.js"></script>
+    <script src="~/lib/custom_alert/jquery.bootstrap-growl.min.js"></script>
+    <script src="~/js/common.js"></script>
+    @RenderSection("Scripts", false)
+</body>
+</html>

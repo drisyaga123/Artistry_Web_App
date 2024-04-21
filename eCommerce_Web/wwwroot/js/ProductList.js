@@ -1,7 +1,7 @@
 ﻿let priceArray = [];
 let categoryArray = [];
 let subCategoryArray = [];
-
+let productId = 0;
 function handleCheckboxChange(event) {
     priceArray = [];
     categoryArray = [];
@@ -95,6 +95,62 @@ function addItemToCart(id, quantity) {
 function goToOrderPage(id) {
     window.location.href = redirectUrl.orderSummaryPage + "?id=" + id;
 }
+function viewAllReviews(id) {
+    if (id > 0) {
+        $.ajax({
+            url: apiUrls.get_all_reviews,
+            type: "POST",
+            data: JSON.stringify({
+                Id: id
+            }),
+            contentType: "application/json",
+            success: function (response) {
+                if (response.length > 0) {
+                    var html = "";
+                    response.forEach(function (review) {
+                        debugger
+                        html = html + `<div class="card mb-2">
+                       <div class="card-body">
+                         <div class="mb-2">`
+                        for (var i = 0; i < review.rating; i++) {
+                            html += `<span class="starFilledDisplay"></span>`;
+                        }
+                        // Render empty star ratings for the remaining stars
+                        for (var i = review.rating; i < 5; i++) {
+                            html += `<span class="starEmptyDisplay"></span>`;
+                        }
+
+                        html += `</div>
+                            <div class="mb-2">
+                            ${review.review}
+                            </div>
+                            <div>
+                            <span>Review by ${review.username} </span>
+                            <span>on ${formatDate(review.createdDate)}</span>
+                               
+                            </div>
+                        </div>
+                    </div>`
+                    })
+                    $("#reviewsContainer").empty();
+                    $("#reviewsContainer").append(html);
+                    $("#ratingModal").modal('show');
+                }
+                else {
+                    alertFailed("No reviews found")
+                }
+                    
+            },
+            error: function (xhr, status, error) {
+                $("#loader").addClass("d-none");
+                alertFailed(xhr.responseText);
+
+            }
+        })
+
+
+    }
+}
 function listProducts(pageIndex) {
     $("#loader").removeClass("d-none");
     var obj = {
@@ -120,7 +176,18 @@ function listProducts(pageIndex) {
                     var offPercentage = 100 - ((parseFloat(product.sellingAmount) / parseFloat(product.mrpAmount)) * 100);
                     offPercentage = offPercentage.toFixed(2);
                     html = html + `<div class="col-lg-3 mb-3"><div class="card" style="width: 15rem;"><img class="card-img-top card-img-fit" src="${product.productImage}" alt="Card image cap"><div class="card-body"><h4>${product.productName}</h4><p class="text-black-50 fst-italic">${product.productDescription}</p>
-                    <span class="text-decoration-line-through text-black-50">₹${product.mrpAmount}</span><span class="ms-2 fw-medium">₹${product.sellingAmount}</span><span class="ms-2 text-danger" style="font-size: smaller;">${offPercentage}% off</span><div class="d-flex justify-content-center mt-2"><button class="btn btn-primary" onclick="addItemToCart(${product.id},1)">Add to cart</button><button class="btn btn-warning ms-2" onclick="goToOrderPage(${product.id})">Buy now</button></div></div></div></div>`
+                    <span class="text-decoration-line-through text-black-50">₹${product.mrpAmount}</span><span class="ms-2 fw-medium">₹${product.sellingAmount}</span><span class="ms-2 text-danger" style="font-size: smaller;">${offPercentage}% off</span>
+                    <a href="#" class="ratingModalOpener" onclick="viewAllReviews(${product.id})"><div>`;
+                    debugger
+                    for (var i = 0; i < product.averageRating; i++) {
+                        html += `<span class="starFilledDisplay"></span>`;
+                    }
+                    // Render empty star ratings for the remaining stars
+                    for (var i = product.averageRating; i < 5; i++) {
+                        html += `<span class="starEmptyDisplay"></span>`;
+                    }      
+                    html += `</div></a>`;
+                    html = html +`<div class="d-flex justify-content-center mt-2"><button class="btn btn-primary" onclick="addItemToCart(${product.id},1)">Add to cart</button><button class="btn btn-warning ms-2" onclick="goToOrderPage(${product.id})">Buy now</button></div></div></div></div>`
 
                 });
                 $("#prodListRow").empty();

@@ -10,7 +10,11 @@ namespace eCommerce_API.Dtos
     public class listFilteredProducts
     {
         public int TotalPages { get; set;}
-        public List<Product> Product_List { get; set;}
+        public List<ProductDto> Product_List { get; set;}
+    }
+    public class ProductDto:Product
+    {
+        public int AverageRating { get; set;}
     }
 
     public class CartDisplayDto

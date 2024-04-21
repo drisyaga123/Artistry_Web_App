@@ -9,6 +9,42 @@
 @{
     Html.RenderPartial("_ViewMoreModal");
 }
+<div class="modal" tabindex="-1" id="ratingModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary-subtle">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="form-group mb-2 required">
+                        
+                        <div class="mt-3" onmouseout="RateSelected()">
+                            <span id="span1" onmouseover="RateOver(1)" onmouseout="RateOut(1)" onclick="RateClick(1)" class="starEmpty"></span>
+                            <span id="span2" onmouseover="RateOver(2)" onmouseout="RateOut(2)" onclick="RateClick(2)" class="starEmpty"></span>
+                            <span id="span3" onmouseover="RateOver(3)" onmouseout="RateOut(3)" onclick="RateClick(3)" class="starEmpty"></span>
+                            <span id="span4" onmouseover="RateOver(4)" onmouseout="RateOut(4)" onclick="RateClick(4)" class="starEmpty"></span>
+                            <span id="span5" onmouseover="RateOver(5)" onmouseout="RateOut(5)" onclick="RateClick(5)" class="starEmpty"></span>
+                        </div>
+                        <input type="hidden" id="hdnRating" value="0" />
+
+                    </div>
+                <div class="form-group mb-2 required">
+                        <label class="col-md-4 control-label" for="delivery_otp">Review</label>
+                        <textarea id="reviewText" class="form-control" placeholder="Write your review here..." rows="4"></textarea>
+                       
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer p-1">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" onclick="submitReview()()" class="btn btn-primary">Submit</button>
+
+
+            </div>
+        </div>
+    </div>
+</div>
 <section class="content_page">
     
     <section class="vh-100">

@@ -1,6 +1,36 @@
 ﻿$(document).ready(function () {
     getAllOrders();
+  
 })
+var productId = 0;
+function RateOver(rating) {
+    for (var i = 1; i <= rating; i++) {
+        $("#span" + i).attr('class', 'starFilled');
+    }
+}
+function RateOut(rating) {
+    for (var i = 1; i <= rating; ++i) {
+        $("#span" + i).attr('class', 'starEmpty');
+    }
+}
+function RateClick(rating) {
+    for (var i = 1; i <= rating; ++i) {
+        $("#hdnRating").val(rating);
+        $("#span" + i).attr('class', 'starFilled');
+    }
+    for (var i = rating + 1; i <= 5; ++i) {
+        $("#span" + i).attr('class', 'starEmpty');
+    }
+}
+function RateSelected() {
+    var rating = $("#hdnRating").val();
+    for (var i = 1; i <= rating; i++) {
+        $("#span" + i).attr('class', 'starFilled');
+
+    }
+}
+
+
 function viewMore(id) {
    
     if (id > 0) {
@@ -146,6 +176,11 @@ function getAllOrders() {
               <li class="step0 ${order.status.toLowerCase() === 'cancelled' ? 'active' : 'd-none'} text-center text-danger" id="step2"><span style="margin-left: 210px;">CANCELLED</span></li>
               <li class="step0 ${order.status.toLowerCase() === 'delivered' ? 'active' : ''} ${order.status.toLowerCase() === 'cancelled' ? 'd-none' : ''} text-muted text-end" id="step3"><span style="margin-right: 22px;">DELIVERED</span></li>
             </ul>
+            ${order.status.toLowerCase() === 'shipped' ? '<h5>OTP: ' + order.otp + '</h5>' : ''}
+            ${order.status.toLowerCase() === 'delivered' ? '<a href="#" class="btn text-primary rate-product-btn" onclick="openReviewModal(' + order.productId + ')" style="text-decoration: underline;">Rate Product</a>' : ''}
+
+
+            
           </div>
           <div class="card-footer p-4">
             <div class="d-flex justify-content-between align-items-center">
@@ -160,7 +195,7 @@ function getAllOrders() {
         </div>
       `;
                 });
-  
+
                 $("#orderHistoryDiv").empty();
                 $("#orderHistoryDiv").append(html);
                
@@ -178,4 +213,67 @@ function getAllOrders() {
         }
     });
 }
+function submitReview() {
+    if (productId > 0) {
+        
+        var ratingValue = $("#hdnRating").val();
+        var review = $("#reviewText").val();
+        if (ratingValue === undefined || ratingValue === null || ratingValue===0) {
+            alertFailed("Please fill rating");
+            return false;
+        } 
+        if (review == "") {
+            $("#reviewText").removeClass("is-valid").addClass("is-invalid");
+            return false;
+        }
+        else {
+            $("#reviewText").addClass("is-valid").removeClass("is-invalid");
+        }
+        var obj = {
+            ProductId: productId,
+            Rating: ratingValue,
+            Review: review
+        }
+        $("#loader").removeClass("d-none");
+        $.ajax({
+            url: apiUrls.rate_product,
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(obj),
+            headers: { "Authorization": 'Bearer ' + localStorage.getItem('jwtToken') },
 
+            success: function (response) {
+                $("#loader").addClass("d-none");
+                $('#ratingModal').modal('hide');
+                if (response != null) {
+
+                    if (response.status.toLowerCase() === "success") {
+                        getAllOrders();
+
+                        alertSuccess(response.message);
+
+                    }
+                    else {
+                        alertFailed(response.message);
+                    }
+
+                }
+                else {
+                    alertFailed("Failed");
+                }
+            },
+            error: function (xhr, status, error) {
+                $('#ratingModal').modal('hide');
+                $("#loader").addClass("d-none");
+                alertFailed(xhr.responseText);
+
+            }
+        });
+    }
+}
+function openReviewModal(id) {
+    productId = id;
+    $("#reviewText").val('');
+    $("#reviewText").removeClass("is-valid").removeClass("is-invalid");
+    $('#ratingModal').modal('show');
+}

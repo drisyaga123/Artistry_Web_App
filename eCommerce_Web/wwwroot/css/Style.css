@@ -296,6 +296,40 @@ button.closeModal {
 .card-stepper {
     z-index: 0
 }
+.starFilled {
+    background-image: url('../../image/star-filled.png');
+    background-size: 30px 30px;
+    min-width: 30px;
+    min-height: 30px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.starEmpty {
+    background-image: url('../../image/star-empty.png');
+    background-size: 30px 30px;
+    min-width: 30px;
+    min-height: 30px;
+    display: inline-block;
+    cursor: pointer;
+}
+.starFilledDisplay {
+    background-image: url('../../image/star-filled.png');
+    background-size: 20px 20px;
+    min-width: 20px;
+    min-height: 20px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.starEmptyDisplay {
+    background-image: url('../../image/star-empty.png');
+    background-size: 20px 20px;
+    min-width: 20px;
+    min-height: 20px;
+    display: inline-block;
+    cursor: pointer;
+}
 
 /* Fade-in animation for the label */
 @keyframes fadeInLabel {

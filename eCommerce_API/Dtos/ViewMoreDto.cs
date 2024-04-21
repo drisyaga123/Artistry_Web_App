@@ -18,6 +18,8 @@ namespace eCommerce_API.Dtos
         public string OrderId { get; set; }
         public string? ProductName { get; set; }
         public string? ProductImage { get; set; }
+        public decimal? TotalPrice { get; set; }
+        public string? PaymentMode { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string Status { get; set; }
     

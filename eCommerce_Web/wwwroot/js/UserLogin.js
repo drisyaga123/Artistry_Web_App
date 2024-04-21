@@ -42,6 +42,9 @@ function submitLogin() {
                 else if (response.role.toLowerCase() === "seller") {
                     window.location.href = redirectUrl.sellerDashBoard;
                 }
+                else if (response.role.toLowerCase() === "deliverymanager") {
+                    window.location.href = redirectUrl.deliveryDashBoard;
+                }
 
 
             },
