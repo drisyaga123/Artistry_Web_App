@@ -130,6 +130,9 @@ function getAllProducts() {
     $.ajax({
         url: apiUrls.get_all_products,
         type: "POST",
+        data: JSON.stringify({
+            id:0
+        }),
         contentType: "application/json",
         headers: { "Authorization": 'Bearer ' + localStorage.getItem('jwtToken') },
         success: function (response) {

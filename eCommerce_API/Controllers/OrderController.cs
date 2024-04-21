@@ -32,7 +32,7 @@ namespace eCommerce_API.Controllers
         [Route("place-order")]
         public async Task<IActionResult> PlaceOrder(OrderDto order)
         {
-            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            using (var transaction = _dbContext.Database.BeginTransaction())
             {
                 try
                 {
@@ -138,17 +138,18 @@ namespace eCommerce_API.Controllers
                     await _dbContext.SaveChangesAsync();
                     _emailService.SendOrderConfirmation(currentUserId, orderMasterList);
                     // Commit the transaction
-                    scope.Complete();
-                    
+                    transaction.Commit();
+
                     return Ok(new Response { Status = "Success", Message = "Order placed successfully!" });
 
                 }
                 catch (Exception ex)
                 {
                     // Rollback the transaction
-                    scope.Dispose();
+                    transaction.Rollback();
                     return BadRequest("Error occured during the process");
                 }
+            
             }
 
 

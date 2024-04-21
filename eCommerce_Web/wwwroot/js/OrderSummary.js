@@ -18,14 +18,25 @@ $(document).ready(function () {
 
 })
 function placeOrder() {
-    $("#loader").removeClass("d-none");
+   
     var hdnProdField = $("#hdnProductId");
     var prodId = 0;
     if (hdnProdField.length > 0) {
         prodId = hdnProdField.val();
     }
+    if (!$('input[name="addressRadio"]').is(':checked')) {
+        alertFailed("Please choose any address");
+        return false;
+    }
+    if (!$('input[name="paymentMethod"]').is(':checked')) {
+        alertFailed("Please choose any payment mode");
+        return false;
+    }
     var selectedAddressId = $('input[name="addressRadio"]:checked').val();
+
     var selectedPayMode = $('input[name="paymentMethod"]:checked').val();
+    
+    $("#loader").removeClass("d-none");
     var obj = {
         ProductId: prodId,
         TotalPrice: $('[data-totalprice]').data('totalprice'),

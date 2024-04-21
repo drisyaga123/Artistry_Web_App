@@ -110,7 +110,7 @@ function getAllOrders() {
         url: apiUrls.get_all_orders,
         type: "POST",
         data: JSON.stringify({
-            Id: id
+            Id: 0
         }),
         contentType: "application/json",
         headers: { "Authorization": 'Bearer ' + localStorage.getItem('jwtToken') },
