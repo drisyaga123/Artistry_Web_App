@@ -4,6 +4,6 @@ namespace eCommerce_API.Services.Email
 {
     public interface IEmailService
     {
-        public void SendOrderConfirmation(int currentUserId,List<OrderMaster> orderList);
+        public Task<string> SendOrderConfirmation(int currentUserId,List<OrderMaster> orderList);
     }
 }

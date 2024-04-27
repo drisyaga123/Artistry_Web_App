@@ -15,7 +15,7 @@ namespace eCommerce_API.Services.Email
             _configuration = configuration;
             _userManager = userManager;
         }
-        public async void SendOrderConfirmation(int currentUserId, List<OrderMaster> orderList)
+        public async Task<string> SendOrderConfirmation(int currentUserId, List<OrderMaster> orderList)
         {
 
             try
@@ -42,8 +42,10 @@ namespace eCommerce_API.Services.Email
                             smtpClient.Send(message);
                         }
                     }
+                    return "sent";
 
                 }
+                return "failed";
             }
             catch
             {
