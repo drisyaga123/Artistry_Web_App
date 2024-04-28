@@ -105,6 +105,7 @@ function editProduct(id) {
                     $("#product_category").val(response.productCategory);
                     $("#product_Mrp").val(response.mrpAmount);
                     $("#product_Sellingprice").val(response.sellingAmount);
+                    $("#product_Stock").val(response.stockQuantity);
                     $("#imgName").html(response.productImage);
                     $("#imgUploadDiv").addClass('d-none');
                     $("#imgEditDiv").removeClass('d-none');
@@ -181,6 +182,7 @@ function validateProductMaster() {
     let category = $("#product_category").val();
     let productMrp = $("#product_Mrp").val();
     let productSellingPrice = $("#product_Sellingprice").val();
+    var stock = $("#product_Stock").val();
     var fileInput = $('#prodfilebutton')[0]; // Get the DOM element
     var file = fileInput.files[0]; 
     
@@ -237,6 +239,22 @@ function validateProductMaster() {
             $("#image-error").text("Selling price is required!");
         }
     }
+    if (stock == "" || stock == null) {
+        isValid = false;
+        $("#product_Stock").removeClass("is-valid").addClass("is-invalid");
+        $("#product-stock-error").text("Stock quantity is required!");
+    }
+    else {
+        if (stock < 0) {
+            isValid = false;
+            $("#product_Stock").removeClass("is-valid").addClass("is-invalid");
+            $("#product-stock-error").text("Stock quantity can not be less than 0!");
+        }
+        else {
+            $("#product_Stock").removeClass("is-invalid").addClass("is-valid");
+
+        }
+    }
 
     return isValid;
 }
@@ -249,6 +267,7 @@ function addProduct() {
         var productSubCategory = $("#product_sub_category").val();
         var productMrp = $("#product_Mrp").val();
         var productSellingPrice = $("#product_Sellingprice").val();
+        var stock = $("#product_Stock").val();
         var fileInput = $("#prodfilebutton")[0].files[0];
 
         var formData = new FormData();
@@ -258,6 +277,7 @@ function addProduct() {
         formData.append("product_sub_category", productSubCategory);
         formData.append("product_Mrp", productMrp);
         formData.append("product_Sellingprice", productSellingPrice);
+        formData.append("product_Stock", stock);
         formData.append("product_image", fileInput);
 
         $.ajax({
@@ -303,6 +323,7 @@ function updateProduct() {
         var productSubCategory = $("#product_sub_category").val();
         var productMrp = $("#product_Mrp").val();
         var productSellingPrice = $("#product_Sellingprice").val();
+        var stock = $("#product_Stock").val();
         var fileInput = '';
         if ($("#imgEditDiv").hasClass('d-none')) {
             fileInput = $("#prodfilebutton")[0].files[0];
@@ -316,6 +337,7 @@ function updateProduct() {
         formData.append("product_sub_category", productSubCategory);
         formData.append("product_Mrp", productMrp);
         formData.append("product_Sellingprice", productSellingPrice);
+        formData.append("product_Stock", stock);
         formData.append("product_image", fileInput);
 
         $.ajax({

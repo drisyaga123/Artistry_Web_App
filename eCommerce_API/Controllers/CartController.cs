@@ -133,6 +133,11 @@ namespace eCommerce_API.Controllers
                     return Ok(new Response { Status = "Failed", Message = "Item does not exist" });
 
                 }
+                if (product.StockQuantity < request.Quantity)
+                {
+                    return Ok(new Response { Status = "Failed", Message = "Insufficient stock!" });
+
+                }
                 item.Quantity= request.Quantity;
                 item.Price = product.SellingAmount * request.Quantity;
                  _dbContext.Update(item);

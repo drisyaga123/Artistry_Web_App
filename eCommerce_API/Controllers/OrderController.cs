@@ -39,6 +39,7 @@ namespace eCommerce_API.Controllers
                 int currentUserId = JwtDetailsFetch.GetCurrentUserId(_httpContextAccessor);
 
                 List<OrderMaster> orderMasterList = new List<OrderMaster>();
+                List<Product> prods = new List<Product>();
                 List<Cart> cartList = new List<Cart>();
                 Guid uniqueId = Guid.NewGuid();
                 string uniqueIdString = uniqueId.ToString();
@@ -52,6 +53,8 @@ namespace eCommerce_API.Controllers
 
                     if (product != null)
                     {
+                        product.StockQuantity = product.StockQuantity - 1;
+                        prods.Add(product);
                         OrderMaster orderMaster0 = new OrderMaster();
                         orderMaster0.OrderId = uniqueIdString;
                         orderMaster0.TotalPrice = order.TotalPrice;
@@ -96,6 +99,8 @@ namespace eCommerce_API.Controllers
 
                             if (prod != null)
                             {
+                                prod.StockQuantity = prod.StockQuantity - item.Quantity;
+                                prods.Add(prod);
                                 OrderMaster orderMaster = new OrderMaster();
                                 orderMaster.OrderId = uniqueIdString;
                                 orderMaster.TotalPrice = order.TotalPrice;
@@ -138,6 +143,10 @@ namespace eCommerce_API.Controllers
                 {
                     _dbContext.Carts.UpdateRange(cartList);
                     
+                }
+                if(prods.Any())
+                {
+                    _dbContext.Products.UpdateRange(prods);
                 }
                 await _emailService.SendOrderConfirmation(currentUserId, orderMasterList);
                 await _dbContext.SaveChangesAsync();
@@ -207,6 +216,12 @@ namespace eCommerce_API.Controllers
                 {
                     return Ok(new Response { Status = "Failed", Message = "Order does not exist" });
 
+                }
+                var product=_dbContext.Products.Where(x => x.Id==item.ProductId).FirstOrDefault();
+                if (product != null)
+                {
+                    product.StockQuantity = product.StockQuantity + 1;
+                    _dbContext.Products.Update(product);
                 }
                 item.Status = "Cancelled";
                 _dbContext.Update(item);

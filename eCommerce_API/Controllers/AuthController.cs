@@ -7,6 +7,7 @@ using eCommerce_API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace eCommerce_API.Controllers
@@ -244,6 +245,41 @@ namespace eCommerce_API.Controllers
                 throw;
             }
         }
+        [HttpPost]
+        [Route("get-users-byrole")]
+        public async Task<IActionResult> GetUsersByRole([FromBody] RoleRequest roleRequest)
+        {
+            try
+            {
+                var usersQuery = _userManager.Users;
+                if (!string.IsNullOrWhiteSpace(roleRequest.Role))
+                {
+                    var usersInRole = await _userManager.GetUsersInRoleAsync(roleRequest.Role);
+                    usersQuery = usersQuery.Where(u => usersInRole.Contains(u));
+                }
 
+                var users = await usersQuery.ToListAsync();
+                List<UserDetails> userDetails = new List<UserDetails>();
+
+                if (users.Count > 0)
+                {
+                    foreach(var user in users)
+                    {
+                        userDetails.Add(new UserDetails
+                        {
+                            Id= user.Id,
+                            UserName= user.UserName
+                        });
+                    }
+                }
+
+                return Ok(userDetails);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Text;
 using eCommerce_API.Data;
 using eCommerce_API.Models;
 using eCommerce_API.Services.Email;
+using eCommerce_API.Services.Pdf;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -66,6 +67,7 @@ builder.Services.AddCors(options => {
             });
       });
 builder.Services.AddTransient<IEmailService, EmailService>();
+builder.Services.AddTransient<IDocService, DocService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

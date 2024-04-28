@@ -108,7 +108,7 @@ function viewAllReviews(id) {
                 if (response.length > 0) {
                     var html = "";
                     response.forEach(function (review) {
-                        debugger
+                        
                         html = html + `<div class="card mb-2">
                        <div class="card-body">
                          <div class="mb-2">`
@@ -176,7 +176,7 @@ function listProducts(pageIndex) {
                     var offPercentage = 100 - ((parseFloat(product.sellingAmount) / parseFloat(product.mrpAmount)) * 100);
                     offPercentage = offPercentage.toFixed(2);
                     html = html + `<div class="col-lg-3 mb-3"><div class="card" style="width: 15rem;"><img class="card-img-top card-img-fit" src="${product.productImage}" alt="Card image cap"><div class="card-body"><h4>${product.productName}</h4><p class="text-black-50 fst-italic">${product.productDescription}</p>
-                    <span class="text-decoration-line-through text-black-50">₹${product.mrpAmount}</span><span class="ms-2 fw-medium">₹${product.sellingAmount}</span><span class="ms-2 text-danger" style="font-size: smaller;">${offPercentage}% off</span>${product.stockQuantity > 0 ? '' :'<h4 class="text-danger">Unavailable</h4>'}
+                    <span class="text-decoration-line-through text-black-50">₹${product.mrpAmount}</span><span class="ms-2 fw-medium">₹${product.sellingAmount}</span><span class="ms-2 text-danger" style="font-size: smaller;">${offPercentage}% off</span>${product.stockQuantity > 0 ? '' :'<h5 class="text-danger">Out of stock!</h5>'}
                     <a href="#" class="ratingModalOpener" onclick="viewAllReviews(${product.id})"><div>`;
                     
                     for (var i = 0; i < product.averageRating; i++) {

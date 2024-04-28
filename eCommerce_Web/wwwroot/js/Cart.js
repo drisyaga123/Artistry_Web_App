@@ -4,8 +4,9 @@
 
 })
 
-function updateQuantity(quantity, productId) {
-    if (quantity > 0 && productId > 0) {
+function updateQuantity(quantity, productId, operation) {
+    if (quantity.value > 0 && productId > 0) {
+
         $("#loader").removeClass("d-none");
         $.ajax({
             url: apiUrls.update_item_quantity,
@@ -13,7 +14,7 @@ function updateQuantity(quantity, productId) {
             contentType: "application/json",
             data: JSON.stringify({
                 "ProductId": productId,
-                "Quantity": quantity
+                "Quantity": quantity.value
             }),
             headers: { "Authorization": 'Bearer ' + localStorage.getItem('jwtToken') },
 
@@ -21,11 +22,18 @@ function updateQuantity(quantity, productId) {
                 $("#loader").addClass("d-none");
                 if (response != null) {
                     if (response.status.toLowerCase() === "success") {
+                      
                         alertSuccess(response.message);
                         getAllCartItems(0);
                     }
                     else {
-                        alertFailed(response.message);
+                        if (operation == "stepup") {
+                            if (response.message.toLowerCase() == "insufficient stock!") {
+                                quantity.stepDown();
+                            }
+                            alertFailed(response.message);
+                        }
+                        
                     }
 
                 }
@@ -44,12 +52,15 @@ function updateQuantity(quantity, productId) {
 function plusQuantity(element,productId) {
     var inputElement = element.parentNode.querySelector('input[type=number]');
     inputElement.stepUp();
-    updateQuantity(inputElement.value, productId);
+    updateQuantity(inputElement, productId,"stepup");
 }
 function minusQuantity(element, productId) {
     var inputElement = element.parentNode.querySelector('input[type=number]');
-    inputElement.stepDown();
-    updateQuantity(inputElement.value, productId);
+    if (inputElement.value > 1) {
+        inputElement.stepDown();
+        updateQuantity(inputElement, productId, "stepdown");
+
+    }
 }
 
 function removeCartItem(id) {

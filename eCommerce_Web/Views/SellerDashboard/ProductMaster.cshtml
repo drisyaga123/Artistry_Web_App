@@ -77,6 +77,13 @@
                     <div class="col-md-12" id="product-sellingprice-error">
                     </div>
                 </div>
+                <div class="form-group mb-2 required">
+                    <label class="col-md-4 control-label" for="product_Stock">Stock Quantity</label>
+                    <input id="product_Stock" name="product_Stock" class="form-control" required="" type="number">
+
+                    <div class="col-md-12" id="product-stock-error">
+                    </div>
+                </div>
                 <div class="form-group required">
                     <label class="col-md-4 control-label" for="prodfilebutton">Upload</label>
                     <div class="d-flex justify-content-between align-items-baseline d-none" id="imgEditDiv">
@@ -113,30 +120,33 @@
 
 
 <div class="content_page">
-   <div class="row justify-content-end mb-2">
-    <div class="col-auto">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
-  Add Product
-</button>
-</div></div>
+    <div class="container">
+        <div class="row justify-content-end mb-2">
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                    Add Product
+                </button>
+            </div>
+        </div>
 
-    <table class="table table-striped table-bordered">
-        <thead class="table-dark">
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Category</th>
-                <th scope="col">SubCategory</th>
-                <th scope="col">M.R.P</th>
-                <th scope="col">Selling Price</th>
-                <th scope="col">Stock</th>
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody id="tBodyProducts">
-           
-        </tbody>
-    </table>
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">SubCategory</th>
+                    <th scope="col">M.R.P</th>
+                    <th scope="col">Selling Price</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody id="tBodyProducts">
+            </tbody>
+        </table>
+    </div>
+   
 </div>
 @section Scripts{
     <script src="~/js/productmaster.js"></script>

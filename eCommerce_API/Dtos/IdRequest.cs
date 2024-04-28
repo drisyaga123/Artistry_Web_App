@@ -66,4 +66,14 @@ namespace eCommerce_API.Dtos
         public string Username { get; set; }
         public DateTime CreatedDate { get; set; }
     }
+    public class RoleRequest
+    {
+        public string Role { get; set; }
+    }
+    public class UserDetails
+    {
+        public int Id { get; set; }
+        public string UserName { get; set; }
+        
+    }
 }

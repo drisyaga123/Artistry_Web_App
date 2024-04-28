@@ -36,6 +36,9 @@ var apiUrls = {
     deliver_order: apiBaseUrl +"/api/Order/deliver-order",
     rate_product : apiBaseUrl +"/api/Order/rate-product",
     get_all_reviews: apiBaseUrl +"/api/Product/get-all-reviews",
+    get_users_byrole: apiBaseUrl + "/api/Auth/get-users-byrole",
+    doc_download : apiBaseUrl + "/api/Document/doc-download"
+
 
 }
 

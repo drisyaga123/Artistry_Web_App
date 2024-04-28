@@ -99,9 +99,28 @@ namespace eCommerce_API.Controllers
                 {
                     currentUser=idRequest.Id;
                 }
-              
-                var prod_list = _dbContext.Products.Where(x=>x.SellerId==currentUser && x.Status.ToLower()=="active").ToList();
-                
+
+                //var prod_list = _dbContext.Products.Where(x=>x.SellerId==currentUser && x.Status.ToLower()=="active").ToList();
+                var prod_list = _dbContext.Products
+    .Where(x => x.SellerId == currentUser && x.Status.ToLower() == "active")
+    .Select(x => new Product
+    {
+        StockQuantity = x.StockQuantity ?? 0,
+        Id = x.Id,
+        SellerId = x.SellerId,
+        ProductName = x.ProductName,
+        ProductCategory = x.ProductCategory,
+        SubCategory = x.SubCategory,
+        ProductDescription = x.ProductDescription,
+        MRPAmount = x.MRPAmount,
+        SellingAmount = x.SellingAmount,
+        ProductImage = x.ProductImage,
+        CreatedDate = x.CreatedDate,
+        ModifiedDate = x.ModifiedDate,
+        Status = x.Status
+    })
+    .ToList();
+
                 if (prod_list.Count>0)
                 {
                     return Ok(prod_list.OrderByDescending(x => x.CreatedDate));  
@@ -217,6 +236,8 @@ namespace eCommerce_API.Controllers
                     product.SubCategory = string.IsNullOrWhiteSpace(Request.Form["product_sub_category"]) ? product.SubCategory : Request.Form["product_sub_category"];
                     product.MRPAmount = string.IsNullOrWhiteSpace(Request.Form["product_Mrp"]) ? product.MRPAmount : Convert.ToDecimal(Request.Form["product_Mrp"]);
                     product.SellingAmount = string.IsNullOrWhiteSpace(Request.Form["product_Sellingprice"]) ? product.MRPAmount : Convert.ToDecimal(Request.Form["product_Sellingprice"]);
+                    product.SellingAmount = string.IsNullOrWhiteSpace(Request.Form["product_Sellingprice"]) ? product.MRPAmount : Convert.ToDecimal(Request.Form["product_Sellingprice"]);
+                    product.StockQuantity = Convert.ToInt32(Request.Form["product_Stock"]);
                     product.ProductImage = string.IsNullOrWhiteSpace(imgPath) ? product.ProductImage : imgPath;
                     product.ModifiedDate = DateTime.Now;
      
@@ -329,6 +350,8 @@ namespace eCommerce_API.Controllers
                         productDto.CreatedDate = prod.CreatedDate;
                         productDto.ModifiedDate = prod.ModifiedDate;
                         productDto.Status = prod.Status;
+                        productDto.StockQuantity = prod.StockQuantity ?? 0;
+
                         if (!string.IsNullOrWhiteSpace(prod.ProductImage) && System.IO.File.Exists(prod.ProductImage))
 						{
 
