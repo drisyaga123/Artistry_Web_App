@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Transactions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace eCommerce_API.Controllers
 {
@@ -32,128 +33,124 @@ namespace eCommerce_API.Controllers
         [Route("place-order")]
         public async Task<IActionResult> PlaceOrder(OrderDto order)
         {
-            using (var transaction = _dbContext.Database.BeginTransaction())
+
+            try
             {
-                try
+                int currentUserId = JwtDetailsFetch.GetCurrentUserId(_httpContextAccessor);
+
+                List<OrderMaster> orderMasterList = new List<OrderMaster>();
+                List<Cart> cartList = new List<Cart>();
+                Guid uniqueId = Guid.NewGuid();
+                string uniqueIdString = uniqueId.ToString();
+
+
+                if (order.ProductId > 0)
                 {
-                    int currentUserId = JwtDetailsFetch.GetCurrentUserId(_httpContextAccessor);
+                    var product = _dbContext.Products
+                        .Include(p => p.AppUser)
+                        .FirstOrDefault(p => p.Id == order.ProductId && p.Status.ToLower() == "active");
 
-                    List<OrderMaster> orderMasterList = new List<OrderMaster>();
-                    List<Cart> cartList = new List<Cart>();
-                    Guid uniqueId = Guid.NewGuid();
-                    string uniqueIdString = uniqueId.ToString();
-                
-
-                    if (order.ProductId > 0)
+                    if (product != null)
                     {
-                        var product = _dbContext.Products
-                            .Include(p => p.AppUser)
-                            .FirstOrDefault(p => p.Id == order.ProductId && p.Status.ToLower() == "active");
-
-                        if (product != null)
-                        {
-                            OrderMaster orderMaster0 = new OrderMaster();
-                            orderMaster0.OrderId = uniqueIdString;
-                            orderMaster0.TotalPrice = order.TotalPrice;
-                            orderMaster0.Discount = order.Discount;
-                            orderMaster0.DeliveryCharge = order.DeliveryCharge;
-                            orderMaster0.PaymentMode = order.PaymentMode;
-                            orderMaster0.DeliveryAddress = order.AddressId;
-                            orderMaster0.UserId = currentUserId;
-                            orderMaster0.SellerId = product.SellerId;
-                            orderMaster0.Status = "Placed";
-                            orderMaster0.CreatedDate = DateTime.Now;
-                            orderMaster0.SellerName = product.AppUser?.UserName;
-                            orderMaster0.SellerAddress = product.AppUser?.Address;
-                            orderMaster0.ProductId = product.Id;
-                            orderMaster0.ProductName = product.ProductName;
-                            orderMaster0.ProductDescription = product.ProductDescription;
-                            orderMaster0.MRPAmount = product.MRPAmount;
-                            orderMaster0.SellingAmount = product.SellingAmount;
-                            orderMaster0.ProductImage = product.ProductImage;
-                            orderMaster0.Quantity = order.Quantity;
-                            orderMasterList.Add(orderMaster0);
-                        }
-                        else
-                        {
-                            return Ok(new Response { Status = "Failed", Message = "Product not found" });
-
-                        }
+                        OrderMaster orderMaster0 = new OrderMaster();
+                        orderMaster0.OrderId = uniqueIdString;
+                        orderMaster0.TotalPrice = order.TotalPrice;
+                        orderMaster0.Discount = order.Discount;
+                        orderMaster0.DeliveryCharge = order.DeliveryCharge;
+                        orderMaster0.PaymentMode = order.PaymentMode;
+                        orderMaster0.DeliveryAddress = order.AddressId;
+                        orderMaster0.UserId = currentUserId;
+                        orderMaster0.SellerId = product.SellerId;
+                        orderMaster0.Status = "Placed";
+                        orderMaster0.CreatedDate = DateTime.Now;
+                        orderMaster0.SellerName = product.AppUser?.UserName;
+                        orderMaster0.SellerAddress = product.AppUser?.Address;
+                        orderMaster0.ProductId = product.Id;
+                        orderMaster0.ProductName = product.ProductName;
+                        orderMaster0.ProductDescription = product.ProductDescription;
+                        orderMaster0.MRPAmount = product.MRPAmount;
+                        orderMaster0.SellingAmount = product.SellingAmount;
+                        orderMaster0.ProductImage = product.ProductImage;
+                        orderMaster0.Quantity = order.Quantity;
+                        orderMasterList.Add(orderMaster0);
                     }
                     else
                     {
-                         cartList = _dbContext.Carts
-                            .Where(c => c.UserId == currentUserId && c.Status.ToLower() == "active")
-                            .ToList();
+                        return Ok(new Response { Status = "Failed", Message = "Product not found" });
 
-                        if (cartList != null && cartList.Count > 0)
+                    }
+                }
+                else
+                {
+                    cartList = _dbContext.Carts
+                       .Where(c => c.UserId == currentUserId && c.Status.ToLower() == "active")
+                       .ToList();
+
+                    if (cartList != null && cartList.Count > 0)
+                    {
+                        foreach (var item in cartList)
                         {
-                            foreach (var item in cartList)
+                            var prod = _dbContext.Products
+                                .Include(p => p.AppUser)
+                                .FirstOrDefault(p => p.Id == item.ProductId && p.Status.ToLower() == "active");
+
+                            if (prod != null)
                             {
-                                var prod = _dbContext.Products
-                                    .Include(p => p.AppUser)
-                                    .FirstOrDefault(p => p.Id == item.ProductId && p.Status.ToLower() == "active");
+                                OrderMaster orderMaster = new OrderMaster();
+                                orderMaster.OrderId = uniqueIdString;
+                                orderMaster.TotalPrice = order.TotalPrice;
+                                orderMaster.Discount = order.Discount;
+                                orderMaster.DeliveryCharge = order.DeliveryCharge;
+                                orderMaster.PaymentMode = order.PaymentMode;
+                                orderMaster.DeliveryAddress = order.AddressId;
+                                orderMaster.UserId = currentUserId;
+                                orderMaster.SellerId = prod.SellerId;
+                                orderMaster.Status = "Placed";
+                                orderMaster.CreatedDate = DateTime.Now;
+                                orderMaster.SellerName = prod.AppUser?.UserName;
+                                orderMaster.SellerAddress = prod.AppUser?.Address;
+                                orderMaster.ProductId = prod.Id;
+                                orderMaster.ProductName = prod.ProductName;
+                                orderMaster.ProductDescription = prod.ProductDescription;
+                                orderMaster.MRPAmount = prod.MRPAmount;
+                                orderMaster.SellingAmount = prod.SellingAmount;
+                                orderMaster.ProductImage = prod.ProductImage;
+                                orderMaster.Quantity = item.Quantity;
+                                orderMasterList.Add(orderMaster);
+                                item.Status = "Inactive";
+                            }
+                            else
+                            {
+                                return Ok(new Response { Status = "Failed", Message = "Product not found" });
 
-                                if (prod != null)
-                                {
-                                    OrderMaster orderMaster = new OrderMaster();
-                                    orderMaster.OrderId = uniqueIdString;
-                                    orderMaster.TotalPrice = order.TotalPrice;
-                                    orderMaster.Discount = order.Discount;
-                                    orderMaster.DeliveryCharge = order.DeliveryCharge;
-                                    orderMaster.PaymentMode = order.PaymentMode;
-                                    orderMaster.DeliveryAddress = order.AddressId;
-                                    orderMaster.UserId = currentUserId;
-                                    orderMaster.SellerId = prod.SellerId;
-                                    orderMaster.Status = "Placed";
-                                    orderMaster.CreatedDate = DateTime.Now;
-                                    orderMaster.SellerName = prod.AppUser?.UserName;
-                                    orderMaster.SellerAddress = prod.AppUser?.Address;
-                                    orderMaster.ProductName = prod.ProductName;
-                                    orderMaster.ProductDescription = prod.ProductDescription;
-                                    orderMaster.MRPAmount = prod.MRPAmount;
-                                    orderMaster.SellingAmount = prod.SellingAmount;
-                                    orderMaster.ProductImage = prod.ProductImage;
-                                    orderMaster.Quantity = item.Quantity;
-                                    orderMasterList.Add(orderMaster);
-                                    item.Status = "Inactive";
-                                }
-                                else
-                                {
-                                    return Ok(new Response { Status = "Failed", Message = "Product not found" });
-
-                                }
                             }
                         }
                     }
-
-                    if (orderMasterList.Any())
-                    {
-                        await _dbContext.OrderMaster.AddRangeAsync(orderMasterList);
-                        
-                    }
-                    if (cartList != null && cartList.Any())
-                    {
-                        _dbContext.Carts.UpdateRange(cartList);
-                    }
-                    await _dbContext.SaveChangesAsync();
-                    _emailService.SendOrderConfirmation(currentUserId, orderMasterList);
-                    // Commit the transaction
-                    transaction.Commit();
-
-                    return Ok(new Response { Status = "Success", Message = "Order placed successfully!" });
-
                 }
-                catch (Exception ex)
+
+                if (orderMasterList.Any())
                 {
-                    // Rollback the transaction
-                    transaction.Rollback();
-                    return BadRequest("Error occured during the process");
+                    await _dbContext.OrderMaster.AddRangeAsync(orderMasterList);
+                  
+
                 }
-            
+                if (cartList != null && cartList.Any())
+                {
+                    _dbContext.Carts.UpdateRange(cartList);
+                    
+                }
+                await _emailService.SendOrderConfirmation(currentUserId, orderMasterList);
+                await _dbContext.SaveChangesAsync();
+               
+         
+
+                return Ok(new Response { Status = "Success", Message = "Order placed successfully!" });
+
             }
-
-
+            catch (Exception ex)
+            {
+                return BadRequest("Error occured during the process");
+            }
         }
         [HttpPost]
         [Route("get-all-orders")]
