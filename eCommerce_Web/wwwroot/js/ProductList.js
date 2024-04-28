@@ -176,9 +176,9 @@ function listProducts(pageIndex) {
                     var offPercentage = 100 - ((parseFloat(product.sellingAmount) / parseFloat(product.mrpAmount)) * 100);
                     offPercentage = offPercentage.toFixed(2);
                     html = html + `<div class="col-lg-3 mb-3"><div class="card" style="width: 15rem;"><img class="card-img-top card-img-fit" src="${product.productImage}" alt="Card image cap"><div class="card-body"><h4>${product.productName}</h4><p class="text-black-50 fst-italic">${product.productDescription}</p>
-                    <span class="text-decoration-line-through text-black-50">₹${product.mrpAmount}</span><span class="ms-2 fw-medium">₹${product.sellingAmount}</span><span class="ms-2 text-danger" style="font-size: smaller;">${offPercentage}% off</span>
+                    <span class="text-decoration-line-through text-black-50">₹${product.mrpAmount}</span><span class="ms-2 fw-medium">₹${product.sellingAmount}</span><span class="ms-2 text-danger" style="font-size: smaller;">${offPercentage}% off</span>${product.stockQuantity > 0 ? '' :'<h4 class="text-danger">Unavailable</h4>'}
                     <a href="#" class="ratingModalOpener" onclick="viewAllReviews(${product.id})"><div>`;
-                    debugger
+                    
                     for (var i = 0; i < product.averageRating; i++) {
                         html += `<span class="starFilledDisplay"></span>`;
                     }
@@ -187,7 +187,7 @@ function listProducts(pageIndex) {
                         html += `<span class="starEmptyDisplay"></span>`;
                     }      
                     html += `</div></a>`;
-                    html = html +`<div class="d-flex justify-content-center mt-2"><button class="btn btn-primary" onclick="addItemToCart(${product.id},1)">Add to cart</button><button class="btn btn-warning ms-2" onclick="goToOrderPage(${product.id})">Buy now</button></div></div></div></div>`
+                    html = html + `<div class="d-flex justify-content-center mt-2"><button class="btn btn-primary ${product.stockQuantity > 0 ? '' : 'disabled'}" onclick="addItemToCart(${product.id},1)">Add to cart</button><button class="btn btn-warning ms-2 ${product.stockQuantity > 0 ? '' : 'disabled'}" onclick="goToOrderPage(${product.id})">Buy now</button></div></div></div></div>`
 
                 });
                 $("#prodListRow").empty();

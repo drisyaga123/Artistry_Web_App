@@ -23,6 +23,8 @@ namespace eCommerce_API.Models
         public decimal SellingAmount { get; set; }
         [Required]
         public string? ProductImage { get; set; }
+       
+        public int? StockQuantity { get; set; }
         [Required]
         public DateTime CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }

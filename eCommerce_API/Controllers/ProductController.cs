@@ -57,6 +57,7 @@ namespace eCommerce_API.Controllers
                     SubCategory = Request.Form["product_sub_category"],
                     MRPAmount = Convert.ToDecimal(Request.Form["product_Mrp"]),
                     SellingAmount = Convert.ToDecimal(Request.Form["product_Sellingprice"]),
+                    StockQuantity = Convert.ToInt32(Request.Form["product_Stock"]),
                     ProductImage = filePath,
                     SellerId = currentUserId,
                     CreatedDate= DateTime.Now,

@@ -17,7 +17,7 @@ function viewProducts(id) {
             if (response != null) {
                 response.forEach(function (product) {
                     html = html + `<tr><td>${product.productName}</td><td>${product.productDescription}</td><td>${product.productCategory}</td>
-                    <td>${product.subCategory === `null` ? "--" : product.subCategory}</td><td>${product.mrpAmount}</td><td>${product.sellingAmount}</td><td>${formatDate(product.createdDate)}</td></tr>`
+                    <td>${product.subCategory === `null` ? "--" : product.subCategory}</td><td>${product.mrpAmount}</td><td>${product.sellingAmount}</td><td>${product.stockQuantity}</td><td>${formatDate(product.createdDate)}</td></tr>`
                 });
                 $("#tbodyViewProds").empty();
                 $("#tbodyViewProds").append(html);

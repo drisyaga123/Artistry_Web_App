@@ -141,7 +141,7 @@ function getAllProducts() {
             if (response != null) {
                 response.forEach(function (product) {
                     html = html + `<tr><td>${product.productName}</td><td>${product.productDescription}</td><td>${product.productCategory}</td>
-                    <td>${product.subCategory === `null` ? "--" : product.subCategory}</td><td>${product.mrpAmount}</td><td>${product.sellingAmount}</td><td><div class="d-flex">
+                    <td>${product.subCategory === `null` ? "--" : product.subCategory}</td><td>${product.mrpAmount}</td><td>${product.sellingAmount}</td><td>${product.stockQuantity}</td><td><div class="d-flex">
                     <button onclick="viewImage(${product.id})" class="btn p-1" title="View image"><i class="fa fa-eye text-primary" aria-hidden="true"></i></button>
                     <button onclick="editProduct(${product.id})" class="btn p-1" title="Edit product"><i class="fas fa-edit text-warning"></i></button>
                     <button onclick="deleteProduct(${product.id})" class="btn p-1" title="Delete product"><i class="fa fa-trash text-danger" aria-hidden="true"></i></button></td></tr>`
